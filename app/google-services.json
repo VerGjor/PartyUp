@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "739188315928",
+    "firebase_url": "https://partyup-af471.firebaseio.com",
+    "project_id": "partyup-af471",
+    "storage_bucket": "partyup-af471.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739188315928:android:5157a749b19e02de",
+        "android_client_info": {
+          "package_name": "com.vergjor.android.partyup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739188315928-a13o5u2ia0ct32scepecakt63abgo90i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtYmx437CqS2tqvomYsEZ3zHtHUecCJG8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
