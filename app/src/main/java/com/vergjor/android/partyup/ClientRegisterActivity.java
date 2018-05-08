@@ -15,7 +15,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegisterActivity extends AppCompatActivity {
+public class ClientRegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +42,11 @@ public class RegisterActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success= jsonResponse.getBoolean("success");
                             if (success){
-                                Intent intent = new Intent(RegisterActivity.this,Activity1.class);
-                                RegisterActivity.this.startActivity(intent);
+                                Intent intent = new Intent(ClientRegisterActivity.this,Activity1.class);
+                                ClientRegisterActivity.this.startActivity(intent);
                             }
                             else{
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ClientRegisterActivity.this);
                                 builder.setMessage("Failed")
                                         .setNegativeButton("Retry", null)
                                         .create()
@@ -58,8 +58,8 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 };
 
-                RegisterRequest registerRequest = new RegisterRequest(name, location, password, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+                RegisterClientRequest registerRequest = new RegisterClientRequest(name, location,  responseListener);
+                RequestQueue queue = Volley.newRequestQueue(ClientRegisterActivity.this);
                 queue.add(registerRequest);
             }
         });

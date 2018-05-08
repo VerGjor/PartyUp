@@ -24,7 +24,7 @@ public class Activity1 extends AppCompatActivity {
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registerIntent = new Intent(Activity1.this, RegisterActivity.class);
+                Intent registerIntent = new Intent(Activity1.this, ClientRegisterActivity.class);
                         Activity1.this.startActivity(registerIntent);
             }
         });

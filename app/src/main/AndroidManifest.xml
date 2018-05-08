@@ -11,10 +11,10 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".DetailedCardActivity"/>
-        <activity android:name=".OwnerRegister"/>
-        <activity android:name=".PreLogin"/>
+        <activity android:name=".OwnerRegisterActivity"/>
+        <activity android:name=".PreLoginActivity"/>
         <activity android:name=".SplashActivity"/>
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ClientRegisterActivity" />
         <activity android:name=".PartyListActivity" />
         <activity android:name=".ClientActivity"></activity>
         <activity android:name=".ShadowTransformerActivity" />
