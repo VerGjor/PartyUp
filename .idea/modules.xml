@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/PartyUp.iml" filepath="$PROJECT_DIR$/.idea/PartyUp.iml" />
-      <module fileurl="file://C:\Users\KaltrinI\Desktop\PartyUUP\PartyUp\PartyUp.iml" filepath="C:\Users\KaltrinI\Desktop\PartyUUP\PartyUp\PartyUp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
