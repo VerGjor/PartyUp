@@ -15,7 +15,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        imageView = (ImageView) findViewById(R.id.iv);
+        imageView = findViewById(R.id.iv);
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.splashtransition);
         imageView.startAnimation(anim);
         final Intent i = new Intent(this, ClientActivity.class);

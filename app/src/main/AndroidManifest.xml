@@ -13,17 +13,18 @@
         <activity android:name=".DetailedCardActivity"/>
         <activity android:name=".OwnerRegisterActivity"/>
         <activity android:name=".PreLoginActivity"/>
-        <activity android:name=".SplashActivity"/>
-        <activity android:name=".ClientRegisterActivity" />
-        <activity android:name=".PartyListActivity" />
-        <activity android:name=".ClientActivity"></activity>
-        <activity android:name=".ShadowTransformerActivity" />
-        <activity android:name=".Activity1">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ClientRegisterActivity" />
+        <activity android:name=".PartyListActivity" />
+        <activity android:name=".ClientActivity"/>
+        <activity android:name=".ShadowTransformerActivity" />
+        <activity android:name=".Activity1"/>
+
     </application>
 
 </manifest>
