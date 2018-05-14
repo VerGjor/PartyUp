@@ -2,19 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="430dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center">
 
 
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="140dp"
-            android:background="#232323"
+            android:background="@drawable/shape_card"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -36,18 +38,53 @@
                 android:layout_marginTop="5dp"
                 android:text="Date of Event"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/reserve_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_card"
+                    android:src="@drawable/add_btn" />
+
+                <ImageButton
+                    android:id="@+id/like_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_card"
+                    android:src="@drawable/location_btn" />
+
+                <ImageButton
+                    android:id="@+id/location_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_card"
+                    android:src="@drawable/like_btn" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <ImageView
+        <com.vergjor.android.partyup.RoundedImageView
             android:id="@+id/card_image"
             android:layout_width="320dp"
             android:layout_height="150dp"
             android:layout_alignParentTop="true"
             android:src="@drawable/screenshot_2"
             android:layout_centerHorizontal="true" />
+
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>
