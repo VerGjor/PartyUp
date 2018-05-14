@@ -1,6 +1,9 @@
 package com.vergjor.android.partyup;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +23,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private List<ListEvents> listItems;
     private Context context;
+    private Dialog myDialog;
 
     public RecyclerAdapter(List<ListEvents> listItems, Context context){
         this.listItems = listItems;
@@ -28,12 +32,15 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
+        private CardView cardInfo;
+
         public TextView itemTitle;
         public TextView itemDetail;
         public ImageView imageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            cardInfo = (CardView) itemView.findViewById(R.id.card_view);
             itemTitle = (TextView)itemView.findViewById(R.id.event_title);
             itemDetail =
                     (TextView)itemView.findViewById(R.id.event_place_title);
@@ -46,7 +53,25 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_layout, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(v);
+        final ViewHolder viewHolder = new ViewHolder(v);
+
+        myDialog = new Dialog(context);
+        myDialog.setContentView(R.layout.detailed_card);
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        viewHolder.cardInfo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                final ListEvents listItem = listItems.get(viewHolder.getAdapterPosition());
+                TextView dialog_title_tv = (TextView) myDialog.findViewById(R.id.event_name);
+                TextView dialog_date_tv = (TextView) myDialog.findViewById(R.id.event_date);
+                ImageView dialog_image_img= (ImageView) myDialog.findViewById(R.id.card_image);
+                dialog_title_tv.setText(listItem.getEventName());
+                dialog_date_tv.setText(listItem.getDateOfEvent());
+                dialog_image_img.setImageResource(R.drawable.screenshot_2);
+                myDialog.show();
+            }
+        });
         return viewHolder;
     }
 
@@ -60,6 +85,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
        /* Picasso.with(context)
                 .load(listItem.getEventPoster())
                         .into(viewHolder.imageView);*/
+
     }
 
     @Override

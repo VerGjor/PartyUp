@@ -9,11 +9,13 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 public class DetailedCardActivity extends AppCompatActivity{
+
+    private static final String TAG = "DetailedCardActivity";
+    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_card);
-
 
     }
 }
