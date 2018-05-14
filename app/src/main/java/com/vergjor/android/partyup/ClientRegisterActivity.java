@@ -42,7 +42,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success= jsonResponse.getBoolean("success");
                             if (success){
-                                Intent intent = new Intent(ClientRegisterActivity.this,Activity1.class);
+                                Intent intent = new Intent(ClientRegisterActivity.this, ClientActivity.class);
                                 ClientRegisterActivity.this.startActivity(intent);
                             }
                             else{
