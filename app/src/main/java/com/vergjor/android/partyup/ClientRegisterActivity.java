@@ -23,17 +23,14 @@ public class ClientRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         final EditText etName = (EditText) findViewById(R.id.etName);
-        final EditText etLocation = (EditText) findViewById(R.id.etLocation);
-        final EditText etPassword = (EditText) findViewById(R.id.etPassword);
+        final EditText etMobileNumber = (EditText) findViewById(R.id.etMobileNumber);
         final Button btRegister = (Button) findViewById(R.id.btRegister);
 
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String name = etName.getText().toString();
-                final String location = etLocation.getText().toString();
-                final String password = etPassword.getText().toString();
-
+                final String mNumber = etMobileNumber.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -58,7 +55,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
                     }
                 };
 
-                RegisterClientRequest registerRequest = new RegisterClientRequest(name, location,  responseListener);
+                RegisterClientRequest registerRequest = new RegisterClientRequest(name, mNumber,  responseListener);
                 RequestQueue queue = Volley.newRequestQueue(ClientRegisterActivity.this);
                 queue.add(registerRequest);
             }
