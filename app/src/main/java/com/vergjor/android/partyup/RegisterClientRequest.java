@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class RegisterClientRequest extends StringRequest {
 
-    private static final String REGISTER_REQUEST_URL = "https://mpip.000webhostapp.com/Register.php";
+    private static final String REGISTER_REQUEST_URL = "https://mpip.000webhostapp.com/RegisterClient.php";
     private Map<String,String> params;
      public RegisterClientRequest(String name, String phone,  Response.Listener<String> listener){
 

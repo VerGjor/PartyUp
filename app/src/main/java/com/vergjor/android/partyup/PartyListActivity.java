@@ -8,20 +8,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PartyListActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
+
+    private List<ListEvents> listEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_list);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new RecyclerAdapter();
+
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        listEvents = new ArrayList<>();
+        for(int i = 0; i<10; i++){
+            ListEvents listEvents = new ListEvents(
+                    "heading" + i+1,
+                    "Lorem ipsum dummy text"
+            );
+            this.listEvents.add(listEvents);
+        }
+
+        adapter = new RecyclerAdapter(listEvents, this);
         recyclerView.setAdapter(adapter);
     }
 

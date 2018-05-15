@@ -2,7 +2,6 @@ package com.vergjor.android.partyup;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -12,14 +11,14 @@ import java.util.TimerTask;
 public class ClientActivity extends AppCompatActivity {
 
 
-    ViewPager eventSlider;
+    android.support.v4.view.ViewPager eventSlider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
 
-        eventSlider = (ViewPager) findViewById(R.id.eventSlider);
+        eventSlider = (android.support.v4.view.ViewPager) findViewById(R.id.eventSlider);
         EventSliderAdapter eventSliderAdapter = new EventSliderAdapter(this);
         eventSlider.setAdapter(eventSliderAdapter);
 
