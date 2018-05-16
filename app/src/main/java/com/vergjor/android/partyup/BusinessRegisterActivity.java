@@ -1,5 +1,6 @@
 package com.vergjor.android.partyup;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,9 @@ public class BusinessRegisterActivity extends AppCompatActivity {
         final EditText txtAddress=(EditText)findViewById(R.id.txtAdress);
         final EditText txtTax=(EditText)findViewById(R.id.txtTax);
 
+        final UserDatabase db = Room.databaseBuilder(getApplicationContext(),
+                UserDatabase.class, "user-database").allowMainThreadQueries().build();
+
         final Button submit = (Button) findViewById(R.id.btnSubmit);
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +49,8 @@ public class BusinessRegisterActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success= jsonResponse.getBoolean("success");
                             if (success){
+                                db.userInfoDao().insertUser(new User(name));
+                                db.close();
                                 Intent intent = new Intent(BusinessRegisterActivity.this,BusinessActivity.class);
                                 BusinessRegisterActivity.this.startActivity(intent);
                             }
