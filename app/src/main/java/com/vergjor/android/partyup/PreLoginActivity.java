@@ -16,8 +16,7 @@ public class PreLoginActivity extends AppCompatActivity {
         owner.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-
-                Intent i=new Intent(PreLoginActivity.this,OwnerRegisterActivity.class);
+                Intent i=new Intent(PreLoginActivity.this,BusinessRegisterActivity.class);
                 startActivity(i);
             }
         });

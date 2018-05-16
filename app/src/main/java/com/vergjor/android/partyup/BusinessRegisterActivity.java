@@ -1,4 +1,5 @@
 package com.vergjor.android.partyup;
+
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,44 +15,28 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class OwnerRegisterActivity extends AppCompatActivity {
+public class BusinessRegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_register);
+        setContentView(R.layout.activity_business_register);
 
-        final Button submit = (Button) findViewById(R.id.btnOwner);
+        final EditText txtName=(EditText)findViewById(R.id.txtName);
+        final EditText txtPhone=(EditText)findViewById(R.id.txtPhone);
+        final EditText txtAddress=(EditText)findViewById(R.id.txtAdress);
+        final EditText txtTax=(EditText)findViewById(R.id.txtTax);
+
+        final Button submit = (Button) findViewById(R.id.btnSubmit);
+
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                EditText txtname = (EditText)findViewById(R.id.txtName);
+                final String name=txtName.getText().toString();
+                final String tax=txtTax.getText().toString();
+                final String phone=txtPhone.getText().toString();
+                final String addr=txtAddress.getText().toString();
 
-                String bname=txtname.getText().toString().trim();
-                if (bname.length()==0)
-                    return ;
-
-
-                EditText txtphone = (EditText)findViewById(R.id.txtPhone);
-
-                String phone=txtphone.getText().toString().trim();
-                if (phone.length()==0)
-                    return ;
-
-
-                EditText txttax = (EditText)findViewById(R.id.txtTax);
-
-                String tax=txtname.getText().toString().trim();
-                if (tax.length()==0)
-                    return ;
-
-
-
-                EditText txtaddr = (EditText)findViewById(R.id.txtAdress);
-
-                String addr=txtname.getText().toString().trim();
-                if (addr.length()==0)
-                    return ;
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -60,11 +45,11 @@ public class OwnerRegisterActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success= jsonResponse.getBoolean("success");
                             if (success){
-                                Intent intent = new Intent(OwnerRegisterActivity.this,Activity1.class);
-                                OwnerRegisterActivity.this.startActivity(intent);
+                                Intent intent = new Intent(BusinessRegisterActivity.this,BusinessActivity.class);
+                                BusinessRegisterActivity.this.startActivity(intent);
                             }
                             else{
-                                AlertDialog.Builder builder = new AlertDialog.Builder(OwnerRegisterActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(BusinessRegisterActivity.this);
                                 builder.setMessage("Failed")
                                         .setNegativeButton("Retry", null)
                                         .create()
@@ -76,8 +61,8 @@ public class OwnerRegisterActivity extends AppCompatActivity {
                     }
                 };
 
-                RegisterBusinessRequest registerRequest = new RegisterBusinessRequest(bname, tax, phone,addr, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(OwnerRegisterActivity.this);
+                RegisterBusinessRequest registerRequest = new RegisterBusinessRequest(name, tax, phone,addr, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(BusinessRegisterActivity.this);
                 queue.add(registerRequest);
 
 
