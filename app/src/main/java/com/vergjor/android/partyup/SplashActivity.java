@@ -1,5 +1,6 @@
 package com.vergjor.android.partyup;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ public class SplashActivity extends AppCompatActivity {
         imageView.startAnimation(anim);
         final Intent client = new Intent(this, ClientActivity.class);
         final Intent register = new Intent(this, PreLoginActivity.class);
+        final UserDatabase db = Room.databaseBuilder(getApplicationContext(),
+                UserDatabase.class, "user-database").allowMainThreadQueries().build();
         Thread timer = new Thread(){
           public void run(){
               try{
@@ -38,7 +41,8 @@ public class SplashActivity extends AppCompatActivity {
                   if(pref.contains("register"))
                   {
                       String getStatus=pref.getString("register", "nil");
-                      if(getStatus.equals("true")){
+                      if(getStatus.equals("true") && db.userInfoDao().numberOfUsers() == 1){
+                          db.close();
                           startActivity(client);
                       }else{
                           //first time

@@ -53,4 +53,5 @@ public class ClientActivity extends AppCompatActivity {
         Intent partyList = new Intent(this, PartyListActivity.class);
         startActivity(partyList);
     }
+
 }

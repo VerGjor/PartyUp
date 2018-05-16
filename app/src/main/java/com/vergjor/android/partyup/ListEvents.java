@@ -6,19 +6,18 @@ public class ListEvents {
     private String dateOfEvent;
     private String timeOfEvent;
     //private String eventPoster;
-    private int eventTax;
+    //private int eventTax;
     private int eventNumberOfReservations;
 
 
-    public ListEvents(String eventName, String dateOfEvent, int eventTax, int eventNumberOfReservations){
+    public ListEvents(String eventName, String dateOfEvent, String timeOfEvent, int eventNumberOfReservations){
         this.eventName = eventName;
-        String[] split = dateOfEvent.split(" ");
-        this.dateOfEvent = split[0];
-        this.timeOfEvent = split[1];
+        this.dateOfEvent = dateOfEvent;
+        this.timeOfEvent = timeOfEvent;
        // this.eventPoster = eventPoster;
-        this.eventTax = eventTax;
         this.eventNumberOfReservations = eventNumberOfReservations;
     }
+
 
     public String getEventName(){
         return eventName;
@@ -35,10 +34,6 @@ public class ListEvents {
    /* public String getEventPoster(){
         return eventPoster;
     }*/
-
-    public int getEventTax(){
-        return eventTax;
-    }
 
     public int getEventNumberOfReservations(){
         return eventNumberOfReservations;

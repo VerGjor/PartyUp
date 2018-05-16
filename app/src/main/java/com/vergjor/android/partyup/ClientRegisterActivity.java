@@ -1,5 +1,6 @@
 package com.vergjor.android.partyup;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -17,7 +18,6 @@ import org.json.JSONObject;
 
 public class ClientRegisterActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +26,8 @@ public class ClientRegisterActivity extends AppCompatActivity {
         final EditText etName = (EditText) findViewById(R.id.etName);
         final EditText etMobileNumber = (EditText) findViewById(R.id.etMobileNumber);
         final Button btRegister = (Button) findViewById(R.id.btRegister);
+        final UserDatabase db = Room.databaseBuilder(getApplicationContext(),
+                UserDatabase.class, "user-database").allowMainThreadQueries().build();
 
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +42,8 @@ public class ClientRegisterActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success= jsonResponse.getBoolean("success");
                             if (success){
+                                db.userInfoDao().insertUser(new User(name));
+                                db.close();
                                 Intent intent = new Intent(ClientRegisterActivity.this, ClientActivity.class);
                                 ClientRegisterActivity.this.startActivity(intent);
                             }
