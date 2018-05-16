@@ -42,8 +42,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
             super(itemView);
             cardInfo = (CardView) itemView.findViewById(R.id.card_view);
             itemTitle = (TextView)itemView.findViewById(R.id.event_title);
-            itemDetail =
-                    (TextView)itemView.findViewById(R.id.event_place_title);
             /*imageView =
                     (ImageView) itemView.findViewById(R.id.card_background_img);*/
         }
@@ -82,7 +80,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         final ListEvents listItem = listItems.get(i);
 
         viewHolder.itemTitle.setText(listItem.getEventName());
-        viewHolder.itemDetail.setText(listItem.getDateOfEvent());
 
        /* Picasso.with(context)
                 .load(listItem.getEventPoster())

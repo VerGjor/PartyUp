@@ -34,6 +34,7 @@ public class SplashActivity extends AppCompatActivity {
                   SharedPreferences.Editor editor;
                   pref = getSharedPreferences("testapp", MODE_PRIVATE);
                   editor = pref.edit();
+
                   if(pref.contains("register"))
                   {
                       String getStatus=pref.getString("register", "nil");
