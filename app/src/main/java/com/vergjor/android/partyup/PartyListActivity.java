@@ -6,17 +6,29 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PartyListActivity extends AppCompatActivity {
 
+    private static final String EVENTS_DATABASE = "https://mpip.000webhostapp.com/GetEvents.php";
+
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
 
-    private List<ListEvents> listEvents;
+    private List<ListEvents> listEvents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,21 +39,51 @@ public class PartyListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        listEvents = new ArrayList<>();
-        for(int i = 0; i<10; i++){
-            ListEvents listEvents = new ListEvents(
-                    "heading" + i+1,
-                    "Lorem ipsum dummy text"
-            );
-            this.listEvents.add(listEvents);
-        }
-
-        adapter = new RecyclerAdapter(listEvents, this);
-        recyclerView.setAdapter(adapter);
+        loadEvents();
     }
 
-    public void moreDetails(View view){
+    private void loadEvents(){
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET,
+                EVENTS_DATABASE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray events = new JSONArray(response);
+                            for(int i=0; i < events.length(); i++){
+                                JSONObject eventsObject = events.getJSONObject(i);
+                                String eventName = eventsObject.getString("E_name");
+                                int eventTax = eventsObject.getInt("B_Tax");
+                               // String eventPoster = eventsObject.getString("Picture");
+                                int eventNumberOfReservations = eventsObject.getInt("Reservations");
+                                String eventDate = eventsObject.getString("Time");
 
+                                listEvents.add(new ListEvents(eventName, eventDate, eventTax, eventNumberOfReservations));
+
+                            }
+
+                            adapter = new RecyclerAdapter(listEvents, PartyListActivity.this);
+                            recyclerView.setAdapter(adapter);
+                        }
+                        catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(
+                                PartyListActivity.this,
+                                error.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
+        Volley.newRequestQueue(this).add(stringRequest);
     }
 
     @Override

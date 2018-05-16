@@ -65,9 +65,11 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                 final ListEvents listItem = listItems.get(viewHolder.getAdapterPosition());
                 TextView dialog_title_tv = (TextView) myDialog.findViewById(R.id.event_name);
                 TextView dialog_date_tv = (TextView) myDialog.findViewById(R.id.event_date);
+                TextView dialog_time_tv = (TextView) myDialog.findViewById(R.id.event_time);
                 ImageView dialog_image_img= (ImageView) myDialog.findViewById(R.id.card_image);
                 dialog_title_tv.setText(listItem.getEventName());
                 dialog_date_tv.setText(listItem.getDateOfEvent());
+                dialog_time_tv.setText(listItem.getTimeOfEvent());
                 dialog_image_img.setImageResource(R.drawable.screenshot_2);
                 myDialog.show();
             }
