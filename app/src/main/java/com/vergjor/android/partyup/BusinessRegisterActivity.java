@@ -24,7 +24,7 @@ public class BusinessRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_business_register);
 
         final EditText txtName=(EditText)findViewById(R.id.txtName);
-        final EditText txtPhone=(EditText)findViewById(R.id.txtPhone);
+        final EditText txtPhone=(EditText)findViewById(R.id.txtNumber);
         final EditText txtAddress=(EditText)findViewById(R.id.txtAdress);
         final EditText txtTax=(EditText)findViewById(R.id.txtTax);
 
