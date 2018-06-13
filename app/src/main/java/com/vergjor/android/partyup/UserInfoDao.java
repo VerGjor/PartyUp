@@ -26,7 +26,10 @@ public interface UserInfoDao {
 
     @Query("SELECT user_type FROM user")
     int getUserType();
-    
+
+    @Query("SELECT user_name FROM user")
+    String getUserName();
+
     @Insert
     void insertUser(User user);
 

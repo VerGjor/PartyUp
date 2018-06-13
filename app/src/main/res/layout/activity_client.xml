@@ -8,18 +8,24 @@
     tools:context="com.vergjor.android.partyup.ClientActivity"
     android:textAlignment="center" >
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@mipmap/logo"
+        android:scaleX="0.9"
+        android:scaleY="0.9"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/eventSlider"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="0dp">
+        android:layout_margin="15dp">
 
     </android.support.v4.view.ViewPager>
 
 
     <LinearLayout
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="horizontal">
@@ -51,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="My Events"
-                android:textColor="#ffffff"
+                android:textColor="#B9B7A7"
                 />
 
         </LinearLayout>
@@ -85,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="What's new?"
-                android:textColor="#ffffff"
+                android:textColor="#B9B7A7"
 
                 />
 
