@@ -42,7 +42,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success= jsonResponse.getBoolean("success");
                             if (success){
-                                db.userInfoDao().insertUser(new User(name));
+                                db.userInfoDao().insertUser(new User(name, 1));
                                 db.close();
                                 Intent intent = new Intent(ClientRegisterActivity.this, ClientActivity.class);
                                 ClientRegisterActivity.this.startActivity(intent);

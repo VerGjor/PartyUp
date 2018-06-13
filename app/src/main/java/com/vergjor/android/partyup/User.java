@@ -13,8 +13,16 @@ public class User {
     @ColumnInfo(name = "user_name")
     public String userName;
 
-    public User(String userName){
+    @ColumnInfo(name = "user_type")
+    public int user_type;
+
+    public User(String userName, int user_type){
         this.userName = userName;
+        this.user_type = user_type;
+    }
+
+    public int getUserType(){
+        return user_type;
     }
 
 }

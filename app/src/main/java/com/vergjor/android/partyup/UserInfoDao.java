@@ -24,6 +24,9 @@ public interface UserInfoDao {
     @Query("DELETE FROM UserReservations WHERE eventTitle LIKE :etitle")
     void deleteReservation(String etitle);
 
+    @Query("SELECT user_type FROM user")
+    int getUserType();
+    
     @Insert
     void insertUser(User user);
 

@@ -49,9 +49,9 @@ public class BusinessRegisterActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success= jsonResponse.getBoolean("success");
                             if (success){
-                                db.userInfoDao().insertUser(new User(name));
+                                db.userInfoDao().insertUser(new User(name, 2));
                                 db.close();
-                                Intent intent = new Intent(BusinessRegisterActivity.this,BusinessActivity.class);
+                                Intent intent = new Intent(BusinessRegisterActivity.this,ClientActivity.class);
                                 BusinessRegisterActivity.this.startActivity(intent);
                             }
                             else{

@@ -1,5 +1,6 @@
 package com.vergjor.android.partyup;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +48,20 @@ public class ClientActivity extends AppCompatActivity {
         }
     }
 
+
+    public void getUserData(View view) {
+        Intent getProfile;
+        UserDatabase db = Room.databaseBuilder(getApplicationContext(),
+                UserDatabase.class, "user-database").allowMainThreadQueries().build();
+        if(db.userInfoDao().getUserType() == 1){
+            getProfile = new Intent(this, ClientProfileActivity.class);
+        }
+        else{
+            getProfile = new Intent(this, OwnerProfileActivity.class);
+        }
+        db.close();
+        startActivity(getProfile);
+    }
 
 
     public void getPartyList(View view){

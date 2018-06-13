@@ -6,65 +6,90 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.vergjor.android.partyup.ClientActivity"
-    android:textAlignment="center"
-    android:weightSum="1">
-
-    <ImageView
-        android:id="@+id/logo_icon"
-        android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:src="@drawable/imageedit_1_7148389868" style="@style/Base.Theme.AppCompat.Dialog.FixedSize"/>
+    android:textAlignment="center" >
 
     <android.support.v4.view.ViewPager
         android:id="@+id/eventSlider"
         android:layout_width="match_parent"
-        android:layout_height="163dp"
-        android:layout_weight="0.29">
+        android:layout_height="200dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="0dp">
 
     </android.support.v4.view.ViewPager>
 
 
-    <TextView
-        android:id="@+id/whereDoWeGo"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.73"
-        android:background="#1a0033"
-        android:clickable="true"
-        android:onClick="getPartyList"
-        android:paddingTop="50dp"
-        android:text="Where do we go?"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:textSize="40sp" />
-
     <LinearLayout
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
-        android:layout_height="59dp"
-        android:layout_weight="1"
+        android:layout_height="200dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:textSize="30sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Profile"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:background="#0d001a"/>
 
-        <TextView
-            android:textSize="30sp"
+        <LinearLayout
+            android:id="@+id/myEvents"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Parties"
-            android:padding="10dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:background="#0d001a" />
+            android:background="#0d001a"
+            android:gravity="center"
+            android:clickable="true"
+            android:onClick="getUserData">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/my_parties"
+                android:scaleX="1.5"
+                android:scaleY="1.5"/>
+
+            <TextView
+                android:textSize="20sp"
+                android:paddingTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Events"
+                android:textColor="#ffffff"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/Parties"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#0d001a"
+            android:gravity="center"
+            android:clickable="true"
+            android:onClick="getPartyList">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/events"
+                android:scaleX="1.5"
+                android:scaleY="1.5"/>
+
+            <TextView
+                android:textSize="20sp"
+                android:paddingTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="What's new?"
+                android:textColor="#ffffff"
+
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
