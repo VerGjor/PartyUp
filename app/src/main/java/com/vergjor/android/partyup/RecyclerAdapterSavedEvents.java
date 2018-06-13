@@ -17,48 +17,66 @@ import android.widget.TextView;
 
 import java.util.List;
 
+public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAdapterSavedEvents.ViewHolder> {
 
-/**
- * Created by Veronika Gjoreva on 01/03/2018.
- */
-
-class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-
-    private List<ListEvents> listItems;
-    private Context context;
+    private static List<Events> listItems;
+    private static Context context;
     private Dialog myDialog;
-    private UserSavedEvents userSavedEvents;
-    private UserReservations userReservations;
+    static private UserSavedEvents userSavedEvents;
+    static private UserReservations userReservations;
 
-    public RecyclerAdapter(List<ListEvents> listItems, Context context){
-        this.listItems = listItems;
+    public RecyclerAdapterSavedEvents(List<Events> listItems, Context context){
         this.context = context;
+        this.listItems = listItems;
     }
+
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
-        protected CardView cardInfo;
+        private CardView cardInfo;
 
         public TextView itemTitle;
-        public TextView itemDetail;
         public ImageView imageView;
         public ImageButton btnReserve;
-        public ImageButton btnLocation;
-        public ImageButton btnLike;
+        public ImageButton btnRemove;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
-            cardInfo = itemView.findViewById(R.id.card_view);
+            cardInfo = itemView.findViewById(R.id.card_view_saved_events);
             itemTitle = itemView.findViewById(R.id.event_title);
-            /*imageView =
-                    (ImageView) itemView.findViewById(R.id.card_background_img);*/
+            btnReserve = itemView.findViewById(R.id.makeReservation);
+            btnRemove = itemView.findViewById(R.id.removeCurrentEvent);
+
+            btnReserve.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int i = getAdapterPosition();
+                    userReservations = new UserReservations(listItems.get(i).eventTitle, listItems.get(i).eventDate, listItems.get(i).eventTime);
+                    reserveEventATask task = new reserveEventATask();
+                    task.execute();
+                }
+            });
+
+            btnRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    int i = getAdapterPosition();
+                    UserDatabase db = Room.databaseBuilder(context,
+                            UserDatabase.class, "user-database").allowMainThreadQueries().build();
+                    db.userInfoDao().deleteSavedEvent(listItems.get(i).eventTitle);
+                    db.close();
+                }
+            });
         }
     }
 
+
+
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_layout, viewGroup, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_saved_event_layout, parent, false);
         final ViewHolder viewHolder = new ViewHolder(v);
 
         myDialog = new Dialog(context);
@@ -69,23 +87,21 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         viewHolder.cardInfo.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                final ListEvents listItem = listItems.get(viewHolder.getAdapterPosition());
+                final Events listItem = listItems.get(viewHolder.getAdapterPosition());
                 final TextView dialog_title_tv = myDialog.findViewById(R.id.event_name);
                 final TextView dialog_date_tv = myDialog.findViewById(R.id.event_date);
                 final TextView dialog_time_tv = myDialog.findViewById(R.id.event_time);
                 ImageView dialog_image_img= myDialog.findViewById(R.id.card_image);
-                dialog_title_tv.setText(listItem.getEventName());
-                dialog_date_tv.setText(listItem.getDateOfEvent());
-                dialog_time_tv.setText(listItem.getTimeOfEvent());
+                dialog_title_tv.setText(listItem.eventTitle);
+                dialog_date_tv.setText(listItem.eventDate);
+                dialog_time_tv.setText(listItem.eventTime);
                 dialog_image_img.setImageResource(R.drawable.screenshot_2);
                 ImageButton dialog_image_reserve_btn = myDialog.findViewById(R.id.reserve_btn);
+
                 dialog_image_reserve_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        userReservations = new UserReservations(
-                                dialog_title_tv.toString(),
-                                dialog_date_tv.toString(),
-                                dialog_time_tv.toString());
+                        userReservations = new UserReservations(dialog_title_tv.toString(), dialog_date_tv.toString(), dialog_time_tv.toString());
                         reserveEventATask task = new reserveEventATask();
                         task.execute();
                     }
@@ -95,10 +111,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                 dialog_image_like_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        userSavedEvents = new UserSavedEvents(
-                                dialog_title_tv.toString(),
-                                dialog_date_tv.toString(),
-                                dialog_time_tv.toString());
+                        userSavedEvents = new UserSavedEvents(dialog_title_tv.toString(), dialog_date_tv.toString(), dialog_time_tv.toString());
                         addNewSavedEventATask task = new addNewSavedEventATask();
                         task.execute();
                     }
@@ -111,27 +124,17 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        final ListEvents listItem = listItems.get(i);
-
-        viewHolder.itemTitle.setText(listItem.getEventName());
-
-       /* Picasso.with(context)
-                .load(listItem.getEventPoster())
-                        .into(viewHolder.imageView);*/
-
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.itemTitle.setText(listItems.get(position).toString());
     }
+
 
     @Override
     public int getItemCount() {
         return listItems.size();
     }
 
-    public CardView getCardPosition(View itemView){
-        return (CardView) itemView.findViewById(R.id.card_view);
-    }
-
-    private class addNewSavedEventATask extends AsyncTask<Void, Void, Void> {
+    private static class addNewSavedEventATask extends AsyncTask<Void, Void, Void> {
 
 
         UserDatabase db = Room.databaseBuilder(context,
@@ -140,7 +143,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-               db.userInfoDao().saveEvent(userSavedEvents);
+                db.userInfoDao().saveEvent(userSavedEvents);
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -152,7 +155,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         }
     }
 
-    private class reserveEventATask extends AsyncTask<Void, Void, Void> {
+    private static class reserveEventATask extends AsyncTask<Void, Void, Void> {
 
 
         UserDatabase db = Room.databaseBuilder(context,
@@ -172,5 +175,4 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
             return null;
         }
     }
-
 }

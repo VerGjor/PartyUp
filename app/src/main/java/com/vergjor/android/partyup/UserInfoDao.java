@@ -2,6 +2,7 @@ package com.vergjor.android.partyup;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import java.util.List;
@@ -30,13 +31,13 @@ public interface UserInfoDao {
     @Query("SELECT user_name FROM user")
     String getUserName();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUser(User user);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNewReservation(UserReservations userReservations);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveEvent(UserSavedEvents userSavedEvents);
 
 }

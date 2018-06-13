@@ -105,6 +105,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:background="@drawable/shape_card"
                     android:src="@drawable/add_btn" />
 
@@ -113,6 +115,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:background="@drawable/shape_card"
                     android:src="@drawable/location_btn" />
 
@@ -121,6 +125,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:background="@drawable/shape_card"
                     android:src="@drawable/like_btn" />
 
