@@ -10,7 +10,6 @@
         android:label="PartyUp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetailedCardActivity" />
         <activity android:name=".BusinessRegisterActivity" />
         <activity android:name=".PreLoginActivity" />
         <activity android:name=".SplashActivity">
@@ -30,7 +29,9 @@
             android:label="@string/title_activity_add"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ClientProfileActivity" />
-        <activity android:name=".OwnerProfileActivity"></activity>
+        <activity android:name=".OwnerProfileActivity" />
+        <activity android:name=".SavedEventsActivity" />
+        <activity android:name=".UserUpcomingEventsActivity"></activity>
     </application>
 
 </manifest>

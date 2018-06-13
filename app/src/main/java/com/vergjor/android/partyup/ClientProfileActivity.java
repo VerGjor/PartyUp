@@ -1,6 +1,7 @@
 package com.vergjor.android.partyup;
 
 import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -25,10 +26,12 @@ public class ClientProfileActivity extends AppCompatActivity {
     }
 
     public void getSavedEvents(View v){
-
+        Intent savedEvents = new Intent(this, SavedEventsActivity.class);
+        startActivity(savedEvents);
     }
 
     public void getMyReservations(View v){
-
+        Intent userUpcomingEvents = new Intent(this, UserUpcomingEventsActivity.class);
+        startActivity(userUpcomingEvents);
     }
 }

@@ -48,8 +48,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            cardInfo = (CardView) itemView.findViewById(R.id.card_view);
-            itemTitle = (TextView)itemView.findViewById(R.id.event_title);
+            cardInfo = itemView.findViewById(R.id.card_view);
+            itemTitle = itemView.findViewById(R.id.event_title);
             /*imageView =
                     (ImageView) itemView.findViewById(R.id.card_background_img);*/
         }
@@ -83,7 +83,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     @Override
                     public void onClick(View v) {
                         userReservations = new UserReservations(dialog_title_tv.toString(), dialog_date_tv.toString(), dialog_time_tv.toString());
-                        addNewSavedEventATask task = new addNewSavedEventATask();
+                        reserveEventATask task = new reserveEventATask();
                         task.execute();
                     }
                 });
@@ -93,7 +93,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     @Override
                     public void onClick(View v) {
                         userSavedEvents = new UserSavedEvents(dialog_title_tv.toString(), dialog_date_tv.toString(), dialog_time_tv.toString());
-                        reserveEventATask task = new reserveEventATask();
+                        addNewSavedEventATask task = new addNewSavedEventATask();
                         task.execute();
                     }
                 });
