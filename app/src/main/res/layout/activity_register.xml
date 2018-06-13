@@ -2,42 +2,61 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/alc"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.android.partyup.RagisterActivity">
 
+
     <EditText
         android:id="@+id/etName"
-        android:layout_width="360dp"
-        android:layout_height="58dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="70dp"
         android:ems="10"
         android:hint="Name"
+        android:textColor="#B9B7A7"
+        android:theme="@style/EditTextTheme"
         android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etMobileNumber"
-        android:layout_width="359dp"
-        android:layout_height="59dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/EditTextTheme"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
+        android:textColor="#B9B7A7"
         android:hint="Mobile Number"
         android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etName" />
 
     <Button
         android:id="@+id/btRegister"
-        android:layout_width="320dp"
-        android:layout_height="96dp"
-        android:layout_marginTop="17dp"
+        android:textSize="20sp"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/round_button"
         android:text="Register"
         app:layout_constraintTop_toBottomOf="@+id/etMobileNumber"
-        tools:layout_editor_absoluteX="32dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:textColor="#B9B7A7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"  />
+
+
 
 </android.support.constraint.ConstraintLayout>

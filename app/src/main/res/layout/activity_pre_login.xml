@@ -5,19 +5,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/lights_party_dancing_music"
-        >
+        android:background="@drawable/alc">
 
+    <TextView
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="What type of user would you like to be?"
+        android:textColor="#c2c1b9"
+        android:textSize="30sp"
+        android:orientation="vertical"
+        android:paddingTop="120dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        />
 
     <Button
         android:id="@+id/btnClient"
-        android:layout_width="120dp"
+        android:textSize="20sp"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="80dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="24dp"
         android:background="@drawable/round_button"
         android:text="Client"
+        android:textColor="#B9B7A7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnOwner"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -25,13 +38,15 @@
 
     <Button
         android:id="@+id/btnOwner"
-        android:layout_width="120dp"
+        android:textSize="20sp"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="80dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="30dp"
         android:background="@drawable/round_button"
         android:text="Owner"
+        android:textColor="#B9B7A7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnClient" />

@@ -2,27 +2,28 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/test"
+    android:background="@drawable/alc"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.partyup.OwnerRegister">
 
     <Button
         android:id="@+id/btnSubmit"
-        android:layout_width="109dp"
+        android:textSize="20sp"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="80dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/round_button"
-        android:text="Submit"
+        android:text="Register"
+        android:textColor="#B9B7A7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:textColorHint="#CCC"
-        android:textColor="#FFF"
+        android:textColor="#B9B7A7"
         android:id="@+id/txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,15 +31,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="60dp"
         android:ems="10"
-        android:hint="Name of bussiness"
+        android:hint="Name of business"
         android:inputType="textPersonName"
+        android:theme="@style/EditTextTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:textColorHint="#CCC"
-        android:textColor="#FFF"
+        android:textColor="#B9B7A7"
+        android:theme="@style/EditTextTheme"
         android:id="@+id/txtNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,8 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
     <EditText
-        android:textColorHint="#CCC"
-        android:textColor="#FFF"
+        android:textColor="#B9B7A7"
         android:id="@+id/txtTax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,6 +65,7 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Tax File Number"
+        android:theme="@style/EditTextTheme"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -72,6 +74,7 @@
 
     <EditText
         android:id="@+id/txtAdress"
+        android:theme="@style/EditTextTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -80,8 +83,7 @@
         android:ems="10"
         android:hint="Address"
         android:inputType="textPostalAddress"
-        android:textColor="#FFF"
-        android:textColorHint="#CCC"
+        android:textColor="#B9B7A7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTax" />
