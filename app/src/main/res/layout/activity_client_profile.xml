@@ -103,7 +103,7 @@
                     android:paddingTop="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Upcoming events"
+                    android:text="My reservations"
                     android:textColor="#B9B7A7"
 
                     />

@@ -61,13 +61,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:padding="10dp"
                 android:src="@drawable/like_btn"
                 android:scaleX="1.5"
                 android:scaleY="1.5"/>
 
             <TextView
                 android:textSize="15sp"
-                android:paddingTop="15dp"
+                android:paddingTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Saved Events"
@@ -95,16 +96,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:padding="10dp"
                 android:src="@drawable/my_reservations"
                 android:scaleX="1.5"
                 android:scaleY="1.5"/>
 
             <TextView
                 android:textSize="15sp"
-                android:paddingTop="15dp"
+                android:paddingTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Upcoming events"
+                android:text="My reservations"
                 android:textColor="#B9B7A7"
 
                 />
@@ -113,7 +115,7 @@
 
     <LinearLayout
         android:layout_below="@id/firstIcons"
-        android:padding="20dp"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -135,16 +137,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:padding="10dp"
                 android:scaleX="1.5"
                 android:scaleY="1.5"
                 android:src="@drawable/event_reservations" />
 
             <TextView
                 android:textSize="15sp"
-                android:paddingTop="15dp"
+                android:paddingTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reservations"
+                android:text="My events"
                 android:textColor="#B9B7A7"
                 />
 
@@ -170,13 +173,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:padding="10dp"
                 android:scaleX="1.5"
                 android:scaleY="1.5"
                 android:src="@drawable/add_btn" />
 
             <TextView
                 android:textSize="15sp"
-                android:paddingTop="15dp"
+                android:paddingTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create new event"
