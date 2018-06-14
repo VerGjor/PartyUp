@@ -30,8 +30,9 @@ public class SavedEventsActivity extends AppCompatActivity {
         UserDatabase db = Room.databaseBuilder(getApplicationContext(),
                 UserDatabase.class, "user-database").allowMainThreadQueries().build();
         listEvents = new ArrayList<>();
+        int n = db.userInfoDao().numberOfSavedEvents();
 
-        for(int i = 0; i < listEvents.size(); i++) {
+        for(int i = 0; i < n; i++) {
             this.listEvents.add(new Events(
                     db.userInfoDao().userSavedEvents().get(i).eventTitle,
                     db.userInfoDao().userSavedEvents().get(i).eventDate,
@@ -47,7 +48,6 @@ public class SavedEventsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.activity_party_list, menu);
         return true;
     }
 

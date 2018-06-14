@@ -13,7 +13,8 @@ import android.support.annotation.NonNull;
         entity = User.class,
         parentColumns = "userID",
         childColumns = "uID",
-        onDelete = ForeignKey.CASCADE)
+        onDelete = ForeignKey.CASCADE,
+        onUpdate = ForeignKey.CASCADE)
 )
 public class UserSavedEvents {
 
@@ -30,7 +31,7 @@ public class UserSavedEvents {
     @ColumnInfo
     public int uID;
 
-    public UserSavedEvents(String eventTitle, String eventDate, String eventTime){
+    UserSavedEvents(String eventTitle, String eventDate, String eventTime){
         this.eventTitle = eventTitle;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
