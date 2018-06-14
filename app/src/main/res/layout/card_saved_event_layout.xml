@@ -15,12 +15,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#272c38"
+        android:background="@drawable/card_b"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:gravity="center"
+        android:padding="15dp">
 
         <TextView
-            android:id="@+id/event_title"
+            android:id="@+id/event_title_saved"
             android:layout_weight="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

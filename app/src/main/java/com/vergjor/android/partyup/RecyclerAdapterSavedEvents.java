@@ -20,14 +20,17 @@ import java.util.List;
 public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAdapterSavedEvents.ViewHolder> {
 
     private static List<Events> listItems;
+    private static RecyclerAdapterSavedEvents adapter;
     private static Context context;
     private Dialog myDialog;
+    private static String title;
     static private UserSavedEvents userSavedEvents;
     static private UserReservations userReservations;
 
     public RecyclerAdapterSavedEvents(List<Events> listItems, Context context){
         this.context = context;
         this.listItems = listItems;
+        this.adapter = this;
     }
 
 
@@ -44,7 +47,7 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
         public ViewHolder(View itemView) {
             super(itemView);
             cardInfo = itemView.findViewById(R.id.card_view_saved_events);
-            itemTitle = itemView.findViewById(R.id.event_title);
+            itemTitle = itemView.findViewById(R.id.event_title_saved);
             btnReserve = itemView.findViewById(R.id.makeReservation);
             btnRemove = itemView.findViewById(R.id.removeCurrentEvent);
 
@@ -52,7 +55,10 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
                 @Override
                 public void onClick(View v) {
                     int i = getAdapterPosition();
-                    userReservations = new UserReservations(listItems.get(i).eventTitle, listItems.get(i).eventDate, listItems.get(i).eventTime);
+                    userReservations = new UserReservations(
+                            listItems.get(i).eventTitle,
+                            listItems.get(i).eventDate,
+                            listItems.get(i).eventTime);
                     reserveEventATask task = new reserveEventATask();
                     task.execute();
                 }
@@ -80,7 +86,7 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
         final ViewHolder viewHolder = new ViewHolder(v);
 
         myDialog = new Dialog(context);
-        myDialog.setContentView(R.layout.detailed_card);
+        myDialog.setContentView(R.layout.detailed_saved_card);
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
@@ -96,26 +102,6 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
                 dialog_date_tv.setText(listItem.eventDate);
                 dialog_time_tv.setText(listItem.eventTime);
                 dialog_image_img.setImageResource(R.drawable.screenshot_2);
-                ImageButton dialog_image_reserve_btn = myDialog.findViewById(R.id.reserve_btn);
-
-                dialog_image_reserve_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        userReservations = new UserReservations(dialog_title_tv.toString(), dialog_date_tv.toString(), dialog_time_tv.toString());
-                        reserveEventATask task = new reserveEventATask();
-                        task.execute();
-                    }
-                });
-
-                ImageButton dialog_image_like_btn = myDialog.findViewById(R.id.like_btn);
-                dialog_image_like_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        userSavedEvents = new UserSavedEvents(dialog_title_tv.toString(), dialog_date_tv.toString(), dialog_time_tv.toString());
-                        addNewSavedEventATask task = new addNewSavedEventATask();
-                        task.execute();
-                    }
-                });
                 myDialog.show();
             }
         });
@@ -125,7 +111,7 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.itemTitle.setText(listItems.get(position).toString());
+        holder.itemTitle.setText(listItems.get(position).eventTitle);
     }
 
 
@@ -134,7 +120,7 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
         return listItems.size();
     }
 
-    private static class addNewSavedEventATask extends AsyncTask<Void, Void, Void> {
+    /*private static class removeSavedEventTask extends AsyncTask<Void, Void, Void> {
 
 
         UserDatabase db = Room.databaseBuilder(context,
@@ -143,7 +129,8 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                db.userInfoDao().saveEvent(userSavedEvents);
+                db.userInfoDao().deleteReservation(title);
+                adapter.notifyDataSetChanged();
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -154,7 +141,7 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
             return null;
         }
     }
-
+*/
     private static class reserveEventATask extends AsyncTask<Void, Void, Void> {
 
 
@@ -165,6 +152,7 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
         protected Void doInBackground(Void... voids) {
             try{
                 db.userInfoDao().insertNewReservation(userReservations);
+                db.userInfoDao().deleteSavedEvent(userReservations.eventTitle);
             }
             catch (Exception e) {
                 e.printStackTrace();

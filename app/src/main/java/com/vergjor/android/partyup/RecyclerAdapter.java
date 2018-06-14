@@ -25,10 +25,10 @@ import java.util.List;
 class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private List<ListEvents> listItems;
-    private Context context;
+    private static Context context;
     private Dialog myDialog;
-    private UserSavedEvents userSavedEvents;
-    private UserReservations userReservations;
+    private static UserSavedEvents userSavedEvents;
+    private static UserReservations userReservations;
 
     public RecyclerAdapter(List<ListEvents> listItems, Context context){
         this.listItems = listItems;
@@ -83,9 +83,9 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     @Override
                     public void onClick(View v) {
                         userReservations = new UserReservations(
-                                dialog_title_tv.toString(),
-                                dialog_date_tv.toString(),
-                                dialog_time_tv.toString());
+                                listItem.getEventName(),
+                                listItem.getDateOfEvent(),
+                                listItem.getTimeOfEvent());
                         reserveEventATask task = new reserveEventATask();
                         task.execute();
                     }
@@ -96,9 +96,9 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     @Override
                     public void onClick(View v) {
                         userSavedEvents = new UserSavedEvents(
-                                dialog_title_tv.toString(),
-                                dialog_date_tv.toString(),
-                                dialog_time_tv.toString());
+                                listItem.getEventName(),
+                                listItem.getDateOfEvent(),
+                                listItem.getTimeOfEvent());
                         addNewSavedEventATask task = new addNewSavedEventATask();
                         task.execute();
                     }
@@ -131,16 +131,16 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         return (CardView) itemView.findViewById(R.id.card_view);
     }
 
-    private class addNewSavedEventATask extends AsyncTask<Void, Void, Void> {
-
+    private static class addNewSavedEventATask extends AsyncTask<Void, Void, Void> {
 
         UserDatabase db = Room.databaseBuilder(context,
                 UserDatabase.class, "user-database").build();
 
+
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-               db.userInfoDao().saveEvent(userSavedEvents);
+                db.userInfoDao().saveEvent(userSavedEvents);
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -148,6 +148,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
             finally {
                 db.close();
             }
+
             return null;
         }
     }
