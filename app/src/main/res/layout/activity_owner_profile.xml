@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:padding="10dp"
-                android:src="@drawable/my_reservations"
+                android:src="@drawable/event_reservations"
                 android:scaleX="1.5"
                 android:scaleY="1.5"/>
 
@@ -140,7 +140,7 @@
                 android:padding="10dp"
                 android:scaleX="1.5"
                 android:scaleY="1.5"
-                android:src="@drawable/event_reservations" />
+                android:src="@drawable/my_reservations" />
 
             <TextView
                 android:textSize="15sp"
