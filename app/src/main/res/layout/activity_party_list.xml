@@ -4,9 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/drink_glass"
+    android:background="#000000"
     tools:context="com.vergjor.android.partyup.PartyListActivity"
     >
+
+    <ImageView
+        android:id="@+id/cover_saved"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="54dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/cover_saved" />
+
+    <TextView
+        android:id="@+id/title_list_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upcoming events"
+        android:textSize="30sp"
+        android:textColor="#736d5f"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/cover_saved"/>
 
     <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,13 +46,14 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_below="@+id/appBarLayout"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="25dp"
         />
 
     <android.support.design.widget.AppBarLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/appBarLayout"
+        android:layout_below="@id/title_list_activity"
         />
 
 </RelativeLayout>

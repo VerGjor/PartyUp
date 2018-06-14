@@ -7,13 +7,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SavedEventsActivity extends AppCompatActivity {
 
-    private List<Events> listEvents;
+    private List<Events> listEvents = new ArrayList<>();
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
 
@@ -29,18 +30,19 @@ public class SavedEventsActivity extends AppCompatActivity {
 
         UserDatabase db = Room.databaseBuilder(getApplicationContext(),
                 UserDatabase.class, "user-database").allowMainThreadQueries().build();
-        listEvents = new ArrayList<>();
         int n = db.userInfoDao().numberOfSavedEvents();
+        TextView textView = findViewById(R.id.SavedEventsMsg);
 
-        for(int i = 0; i < n; i++) {
-            this.listEvents.add(new Events(
-                    db.userInfoDao().userSavedEvents().get(i).eventTitle,
-                    db.userInfoDao().userSavedEvents().get(i).eventDate,
-                    db.userInfoDao().userSavedEvents().get(i).eventTime));
+        if(n == 0){
+            textView.setText("You have no saved events");
         }
-
-        db.close();
-
+        else {
+            textView.setText("");
+            for (Events e : db.userInfoDao().userSavedEvents()) {
+                listEvents.add(new Events(e.eventTitle, e.eventDate, e.eventTime));
+            }
+            db.close();
+        }
         adapter = new RecyclerAdapterSavedEvents(listEvents, this);
         recyclerView.setAdapter(adapter);
     }
