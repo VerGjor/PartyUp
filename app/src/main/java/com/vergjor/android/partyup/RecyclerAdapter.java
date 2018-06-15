@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 
 /**
@@ -30,6 +31,9 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private Dialog myDialog;
     private static UserSavedEvents userSavedEvents;
     private static UserReservations userReservations;
+    static boolean already_saved = false;
+    static Semaphore lock = new Semaphore(0);
+    static Semaphore lock1 = new Semaphore(0);
 
     public RecyclerAdapter(List<ListEvents> listItems, Context context){
         this.listItems = listItems;
@@ -102,8 +106,20 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                                 listItem.getDateOfEvent(),
                                 listItem.getTimeOfEvent());
                         addNewSavedEventATask task = new addNewSavedEventATask();
+                        lock.release();
                         task.execute();
-                        Toast.makeText(context, "Event saved", Toast.LENGTH_SHORT).show();
+                        try {
+                            lock1.acquire();
+                            if(already_saved){
+                                Toast.makeText(context, "Event is already saved", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                                Toast.makeText(context, "Event saved", Toast.LENGTH_SHORT).show();
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
                 myDialog.show();
@@ -144,6 +160,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         protected Void doInBackground(Void... voids) {
             try{
                 boolean exists = false;
+                boolean existsInSaved = false;
+
                 for(Events e : db.userInfoDao().userReservations()){
                     if(userSavedEvents.eventTitle.equals(e.eventTitle)){
                         exists = true;
@@ -151,9 +169,23 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     }
                 }
 
-                if(!exists){
-                    db.userInfoDao().saveEvent(userSavedEvents);
+                for(Events e : db.userInfoDao().userSavedEvents()){
+                    if(userSavedEvents.eventTitle.equals(e.eventTitle)){
+                        existsInSaved = true;
+                        break;
+                    }
                 }
+
+                if(existsInSaved)
+                    already_saved = true;
+                else
+                    already_saved = false;
+
+
+                if(!exists)
+                    db.userInfoDao().saveEvent(userSavedEvents);
+                lock.acquire();
+                lock1.release();
             }
             catch (Exception e) {
                 e.printStackTrace();

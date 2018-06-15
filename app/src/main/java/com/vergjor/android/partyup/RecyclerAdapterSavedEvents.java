@@ -125,42 +125,6 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
         return listItems.size();
     }
 
-    /*private static class removeSavedEventTask extends AsyncTask<Void, Void, Void> {
-
-
-        UserDatabase db = Room.databaseBuilder(context,
-                UserDatabase.class, "user-database").build();
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try{
-                db.userInfoDao().deleteReservation(title);
-                adapter.notifyDataSetChanged();
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            finally {
-                db.close();
-            }
-            return null;
-        }
-    }
-
-
-    public static void updateTextView(int n){
-
-        SavedEventsActivity eventsActivity = new SavedEventsActivity();
-        TextView textView = eventsActivity.getTextView();
-        if(n == 0){
-            textView.setText("You have no saved events");
-        }
-        else{
-            textView.setText("");
-        }
-    }
-*/
-
     private static class reserveEventATask extends AsyncTask<Void, Void, Void> {
 
 
