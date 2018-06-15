@@ -19,16 +19,12 @@ import java.util.List;
 public class RecyclerAdapterMyReservations extends RecyclerView.Adapter<RecyclerAdapterMyReservations.ViewHolder> {
 
     private static List<Events> listItems;
-    private static RecyclerAdapterMyReservations adapter;
     private static Context context;
     private Dialog myDialog;
-    private static String title;
-    static private UserReservations userReservations;
 
     public RecyclerAdapterMyReservations(List<Events> listItems, Context context){
         this.context = context;
         this.listItems = listItems;
-        this.adapter = this;
     }
 
 
@@ -54,6 +50,10 @@ public class RecyclerAdapterMyReservations extends RecyclerView.Adapter<Recycler
                     UserDatabase db = Room.databaseBuilder(context,
                             UserDatabase.class, "user-database").allowMainThreadQueries().build();
                     db.userInfoDao().deleteReservation(listItems.get(i).eventTitle);
+                    listItems.remove(i);
+                    UserReservationsActivity.adapter.notifyItemRemoved(i);
+                    if(db.userInfoDao().numberOfUserReservations() == 0)
+                        UserReservationsActivity.textView.setText("You have no reservations");
                     // treba da se dopolnitelno otstrane od bazata
                     db.close();
                 }

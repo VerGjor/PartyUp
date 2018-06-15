@@ -140,7 +140,17 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                db.userInfoDao().saveEvent(userSavedEvents);
+                boolean exists = false;
+                for(Events e : db.userInfoDao().userReservations()){
+                    if(userSavedEvents.eventTitle.equals(e.eventTitle)){
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if(!exists){
+                    db.userInfoDao().saveEvent(userSavedEvents);
+                }
             }
             catch (Exception e) {
                 e.printStackTrace();

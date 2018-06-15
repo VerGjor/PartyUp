@@ -20,17 +20,14 @@ import java.util.List;
 public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAdapterSavedEvents.ViewHolder> {
 
     private static List<Events> listItems;
-    private static RecyclerAdapterSavedEvents adapter;
     private static Context context;
     private Dialog myDialog;
-    private static String title;
-    static private UserSavedEvents userSavedEvents;
     static private UserReservations userReservations;
+    static int i;
 
     public RecyclerAdapterSavedEvents(List<Events> listItems, Context context){
         this.context = context;
         this.listItems = listItems;
-        this.adapter = this;
     }
 
 
@@ -44,7 +41,7 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
         public ImageButton btnRemove;
 
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             cardInfo = itemView.findViewById(R.id.card_view_saved_events);
             itemTitle = itemView.findViewById(R.id.event_title_saved);
@@ -54,7 +51,7 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
             btnReserve.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int i = getAdapterPosition();
+                    i = getAdapterPosition();
                     userReservations = new UserReservations(
                             listItems.get(i).eventTitle,
                             listItems.get(i).eventDate,
@@ -67,10 +64,14 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
             btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
-                    int i = getAdapterPosition();
+                    i = getAdapterPosition();
                     UserDatabase db = Room.databaseBuilder(context,
                             UserDatabase.class, "user-database").allowMainThreadQueries().build();
                     db.userInfoDao().deleteSavedEvent(listItems.get(i).eventTitle);
+                    listItems.remove(i);
+                    SavedEventsActivity.adapter.notifyItemRemoved(i);
+                    if(db.userInfoDao().numberOfSavedEvents() == 0)
+                        SavedEventsActivity.textView.setText("You have no saved events");
                     db.close();
                 }
             });
@@ -141,7 +142,21 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
             return null;
         }
     }
+
+
+    public static void updateTextView(int n){
+
+        SavedEventsActivity eventsActivity = new SavedEventsActivity();
+        TextView textView = eventsActivity.getTextView();
+        if(n == 0){
+            textView.setText("You have no saved events");
+        }
+        else{
+            textView.setText("");
+        }
+    }
 */
+
     private static class reserveEventATask extends AsyncTask<Void, Void, Void> {
 
 
@@ -153,6 +168,10 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
             try{
                 db.userInfoDao().insertNewReservation(userReservations);
                 db.userInfoDao().deleteSavedEvent(userReservations.eventTitle);
+                listItems.remove(i);
+                SavedEventsActivity.adapter.notifyItemRemoved(i);
+                if(db.userInfoDao().numberOfSavedEvents() == 0)
+                    SavedEventsActivity.textView.setText("You have no saved events");
             }
             catch (Exception e) {
                 e.printStackTrace();

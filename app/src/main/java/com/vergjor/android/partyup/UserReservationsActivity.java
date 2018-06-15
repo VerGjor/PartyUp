@@ -16,7 +16,8 @@ public class UserReservationsActivity extends AppCompatActivity {
 
     private List<Events> listEvents = new ArrayList<>();
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    public static RecyclerView.Adapter adapter;
+    static TextView textView;
 
 
     @Override
@@ -31,7 +32,7 @@ public class UserReservationsActivity extends AppCompatActivity {
         UserDatabase db = Room.databaseBuilder(getApplicationContext(),
                 UserDatabase.class, "user-database").allowMainThreadQueries().build();
         int n = db.userInfoDao().numberOfUserReservations();
-        TextView textView = findViewById(R.id.myReservationsMsg);
+        textView = findViewById(R.id.myReservationsMsg);
 
         if(n == 0){
             textView.setText("You have no reservations");
