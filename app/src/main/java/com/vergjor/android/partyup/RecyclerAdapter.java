@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -88,6 +89,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                                 listItem.getTimeOfEvent());
                         reserveEventATask task = new reserveEventATask();
                         task.execute();
+                        Toast.makeText(context, "You have a reservation", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -101,6 +103,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                                 listItem.getTimeOfEvent());
                         addNewSavedEventATask task = new addNewSavedEventATask();
                         task.execute();
+                        Toast.makeText(context, "Event saved", Toast.LENGTH_SHORT).show();
                     }
                 });
                 myDialog.show();

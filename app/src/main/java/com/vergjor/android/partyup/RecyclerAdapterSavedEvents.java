@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
                             listItems.get(i).eventTime);
                     reserveEventATask task = new reserveEventATask();
                     task.execute();
+                    Toast.makeText(context, "You have a reservation", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -70,6 +72,8 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
                     db.userInfoDao().deleteSavedEvent(listItems.get(i).eventTitle);
                     listItems.remove(i);
                     SavedEventsActivity.adapter.notifyItemRemoved(i);
+                    Toast.makeText(context, "Event removed", Toast.LENGTH_SHORT).show();
+
                     if(db.userInfoDao().numberOfSavedEvents() == 0)
                         SavedEventsActivity.textView.setText("You have no saved events");
                     db.close();

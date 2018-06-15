@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -52,6 +53,8 @@ public class RecyclerAdapterMyReservations extends RecyclerView.Adapter<Recycler
                     db.userInfoDao().deleteReservation(listItems.get(i).eventTitle);
                     listItems.remove(i);
                     UserReservationsActivity.adapter.notifyItemRemoved(i);
+                    Toast.makeText(context, "Reservation canceled", Toast.LENGTH_SHORT).show();
+
                     if(db.userInfoDao().numberOfUserReservations() == 0)
                         UserReservationsActivity.textView.setText("You have no reservations");
                     // treba da se dopolnitelno otstrane od bazata
@@ -104,28 +107,6 @@ public class RecyclerAdapterMyReservations extends RecyclerView.Adapter<Recycler
         return listItems.size();
     }
 
-    /*private static class removeSavedEventTask extends AsyncTask<Void, Void, Void> {
-
-
-        UserDatabase db = Room.databaseBuilder(context,
-                UserDatabase.class, "user-database").build();
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try{
-                db.userInfoDao().deleteReservation(title);
-                adapter.notifyDataSetChanged();
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            finally {
-                db.close();
-            }
-            return null;
-        }
-    }
-*/
 
 }
 
