@@ -153,7 +153,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         }
     }
 
-    private class reserveEventATask extends AsyncTask<Void, Void, Void> {
+    private static class reserveEventATask extends AsyncTask<Void, Void, Void> {
 
 
         UserDatabase db = Room.databaseBuilder(context,
@@ -163,6 +163,12 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         protected Void doInBackground(Void... voids) {
             try{
                 db.userInfoDao().insertNewReservation(userReservations);
+                for(Events e : db.userInfoDao().userSavedEvents()){
+                    if(userReservations.eventTitle.equals(e.eventTitle)){
+                        db.userInfoDao().deleteSavedEvent(userReservations.eventTitle);
+                        break;
+                    }
+                }
             }
             catch (Exception e) {
                 e.printStackTrace();

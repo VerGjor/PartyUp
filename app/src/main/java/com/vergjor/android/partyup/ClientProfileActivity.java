@@ -31,7 +31,7 @@ public class ClientProfileActivity extends AppCompatActivity {
     }
 
     public void getMyReservations(View v){
-        Intent userUpcomingEvents = new Intent(this, UserUpcomingEventsActivity.class);
+        Intent userUpcomingEvents = new Intent(this, UserReservationsActivity.class);
         startActivity(userUpcomingEvents);
     }
 }

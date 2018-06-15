@@ -31,7 +31,7 @@
         <activity android:name=".ClientProfileActivity" />
         <activity android:name=".OwnerProfileActivity" />
         <activity android:name=".SavedEventsActivity" />
-        <activity android:name=".UserUpcomingEventsActivity"></activity>
+        <activity android:name=".UserReservationsActivity" />
     </application>
 
 </manifest>

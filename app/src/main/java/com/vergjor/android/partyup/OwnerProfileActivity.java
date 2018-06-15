@@ -2,10 +2,9 @@ package com.vergjor.android.partyup;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class OwnerProfileActivity extends AppCompatActivity {
@@ -22,31 +21,22 @@ public class OwnerProfileActivity extends AppCompatActivity {
         String name = db.userInfoDao().getUserName();
         sb.append(name);
         textView.setText(sb.toString());
-
-        final ImageView Link3 = (ImageView) findViewById(R.id.newevent);
-
-        Link3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent registerIntent = new Intent(OwnerProfileActivity.this, AddActivity.class);
-                OwnerProfileActivity.this.startActivity(registerIntent);
-            }
-        });
-
     }
-
 
 
     public void getSavedEvents(View v){
-
+        Intent savedEvents = new Intent(this, SavedEventsActivity.class);
+        startActivity(savedEvents);
     }
 
     public void getMyReservations(View v){
-
+        Intent myReservations = new Intent(this, UserReservationsActivity.class);
+        startActivity(myReservations);
     }
 
     public void createNewEvent(View v){
-
+        Intent registerIntent = new Intent(this, AddActivity.class);
+        startActivity(registerIntent);
     }
 
     public void eventsOverview(View v){
