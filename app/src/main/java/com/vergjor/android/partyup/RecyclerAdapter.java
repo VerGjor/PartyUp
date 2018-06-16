@@ -32,6 +32,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private static UserSavedEvents userSavedEvents;
     private static UserReservations userReservations;
     static boolean already_saved = false;
+    static boolean hasReservation = false;
     static Semaphore lock = new Semaphore(0);
     static Semaphore lock1 = new Semaphore(0);
 
@@ -92,8 +93,20 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                                 listItem.getDateOfEvent(),
                                 listItem.getTimeOfEvent());
                         reserveEventATask task = new reserveEventATask();
+
+                        lock.release();
                         task.execute();
-                        Toast.makeText(context, "You have a reservation", Toast.LENGTH_SHORT).show();
+                        try {
+                            lock1.acquire();
+                            if(already_saved){
+                                Toast.makeText(context, "You already have a reservation", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                                Toast.makeText(context, "You made a reservation", Toast.LENGTH_SHORT).show();
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
@@ -110,11 +123,15 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                         task.execute();
                         try {
                             lock1.acquire();
-                            if(already_saved){
-                                Toast.makeText(context, "Event is already saved", Toast.LENGTH_SHORT).show();
+                            if(hasReservation){
+                                Toast.makeText(context, "You already have a reservation for this event", Toast.LENGTH_SHORT).show();
                             }
                             else
-                                Toast.makeText(context, "Event saved", Toast.LENGTH_SHORT).show();
+                                if(already_saved){
+                                    Toast.makeText(context, "Event is already saved", Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                    Toast.makeText(context, "Event saved", Toast.LENGTH_SHORT).show();
 
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -182,8 +199,13 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     already_saved = false;
 
 
-                if(!exists)
+                if(!exists) {
                     db.userInfoDao().saveEvent(userSavedEvents);
+                    hasReservation = false;
+                }
+                else
+                    hasReservation = true;
+
                 lock.acquire();
                 lock1.release();
             }
@@ -207,13 +229,31 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                db.userInfoDao().insertNewReservation(userReservations);
-                for(Events e : db.userInfoDao().userSavedEvents()){
+
+                boolean existsInReser = false;
+
+                for(Events e : db.userInfoDao().userReservations()){
                     if(userReservations.eventTitle.equals(e.eventTitle)){
-                        db.userInfoDao().deleteSavedEvent(userReservations.eventTitle);
+                        existsInReser = true;
                         break;
                     }
                 }
+
+                if(existsInReser)
+                    already_saved = true;
+                else {
+                    already_saved = false;
+                    db.userInfoDao().insertNewReservation(userReservations);
+                    for(Events e : db.userInfoDao().userSavedEvents()){
+                        if(userReservations.eventTitle.equals(e.eventTitle)){
+                            db.userInfoDao().deleteSavedEvent(userReservations.eventTitle);
+                            break;
+                        }
+                    }
+                }
+
+                lock.acquire();
+                lock1.release();
             }
             catch (Exception e) {
                 e.printStackTrace();
