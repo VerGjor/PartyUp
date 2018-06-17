@@ -19,16 +19,15 @@ public class User {
     @ColumnInfo(name = "tax_owner")
     public String tax_owner;
 
-    public User(String userName, int user_type, String tax_owner){
+    @ColumnInfo(name = "addressOwner")
+    public String addressOwner;
+
+    public User(String userName, int user_type, String tax_owner, String addressOwner){
         this.userName = userName;
         this.user_type = user_type;
         this.tax_owner = tax_owner;
+        this.addressOwner = addressOwner;
     }
-
-    public int getUserType(){
-        return user_type;
-    }
-    public String getTax_owner(){ return tax_owner; }
 
 }
 

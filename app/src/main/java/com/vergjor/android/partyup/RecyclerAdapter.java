@@ -126,7 +126,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                         userSavedEvents = new UserSavedEvents(
                                 listItem.getEventName(),
                                 listItem.getDateOfEvent(),
-                                listItem.getTimeOfEvent());
+                                listItem.getTimeOfEvent(),
+                                listItem.getBtax());
                         addNewSavedEventATask task = new addNewSavedEventATask();
                         lock.release();
                         task.execute();

@@ -39,7 +39,7 @@
         <activity android:name=".UserReservationsActivity" />
         <activity android:name=".AddEventActivity" />
         <activity android:name=".UserAreaActivity" />
-
+        <activity android:name=".OwnerCreatedEventsActivity" />
     </application>
 
 </manifest>

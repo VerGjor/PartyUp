@@ -40,6 +40,7 @@ public class OwnerProfileActivity extends AppCompatActivity {
     }
 
     public void eventsOverview(View v){
-
+        Intent ownerEventsIntent = new Intent(this, OwnerCreatedEventsActivity.class);
+        startActivity(ownerEventsIntent);
     }
 }

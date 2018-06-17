@@ -12,9 +12,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavedEventsActivity extends AppCompatActivity{
+public class OwnerCreatedEventsActivity extends AppCompatActivity{
 
-    public List<Events> listEvents = new ArrayList<>();
+    public List<CreatedEvents> listEvents = new ArrayList<>();
     public RecyclerView recyclerView;
     static RecyclerView.Adapter adapter;
     public static TextView textView;
@@ -26,8 +26,7 @@ public class SavedEventsActivity extends AppCompatActivity{
         setContentView(R.layout.activity_saved_events);
 
         TextView title = findViewById(R.id.title_saved_activity);
-        title.setText("Saved events");
-
+        title.setText("Created Events");
         updateData();
     }
 
@@ -55,16 +54,16 @@ public class SavedEventsActivity extends AppCompatActivity{
         textView = findViewById(R.id.SavedEventsMsg);
 
         if(n == 0){
-            textView.setText("You have no saved events");
+            textView.setText("You have no events");
         }
         else {
             textView.setText("");
-            for (Events e : db.userInfoDao().userSavedEvents()) {
-                listEvents.add(new Events(e.eventTitle, e.eventDate, e.eventTime, e.taxNumber));
+            for (CreatedEvents e : db.userInfoDao().createdEvents()) {
+                listEvents.add(new CreatedEvents(e.eventTitle, e.eventDate, e.eventTime, e.taxNumber, e.numReservations));
             }
             db.close();
         }
-        adapter = new RecyclerAdapterSavedEvents(listEvents, this);
+        adapter = new RecyclerAdapterOwnerCreatedEvents(listEvents, this);
         recyclerView.setAdapter(adapter);
     }
 

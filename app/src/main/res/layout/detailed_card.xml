@@ -107,6 +107,7 @@
                     android:layout_weight="1"
                     android:clickable="true"
                     android:focusable="true"
+                    android:contentDescription="Make a reservation"
                     android:background="@drawable/shape_card"
                     android:src="@drawable/add_btn" />
 

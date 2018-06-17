@@ -1,5 +1,6 @@
 package com.vergjor.android.partyup;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,16 +13,10 @@ import android.widget.EditText;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.cloudinary.Cloudinary;
 import com.cloudinary.android.MediaManager;
-import com.cloudinary.android.UploadRequest;
-import com.cloudinary.utils.ObjectUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Map;
 
 public class AddEventActivity extends AppCompatActivity {
 
@@ -31,8 +26,8 @@ public class AddEventActivity extends AppCompatActivity {
     static Button subm;
     static Button imagepick;
     static String url;
-    //final UserDatabase db = Room.databaseBuilder(getApplicationContext(),
-    //        UserDatabase.class, "user-database").allowMainThreadQueries().build();
+    static String eventDate;
+    static String eventTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +38,8 @@ public class AddEventActivity extends AppCompatActivity {
         nr_R=findViewById(R.id.txtReservInt);
         subm=findViewById(R.id.btnSubmitAdd);
         imagepick=findViewById(R.id.btnImagePick);
+        eventDate = "24.06.2018";
+        eventTime = "00:00:00";
 
         subm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,9 +68,16 @@ public class AddEventActivity extends AppCompatActivity {
                     }
                 };
 
-                AddEventRequest registerRequest = new AddEventRequest(e_name.getText().toString(),"111111111111" ,url ,nr_R.getText().toString(), responseListener);
+                UserDatabase db = Room.databaseBuilder(getApplicationContext(),
+                        UserDatabase.class, "user-database").allowMainThreadQueries().build();
+
+                AddEventRequest registerRequest = new AddEventRequest(e_name.getText().toString(), db.userInfoDao().getTaxOfOwner() ,url ,nr_R.getText().toString(), responseListener);
+                db.userInfoDao().insertNewCreatedEvent(new OwnerCreatedEvents(e_name.getText().toString(),eventDate, eventTime, db.userInfoDao().getTaxOfOwner(), nr_R.getText().toString()));
+                db.close();
+
                 RequestQueue queue = Volley.newRequestQueue(AddEventActivity.this);
                 queue.add(registerRequest);
+
 
 
 

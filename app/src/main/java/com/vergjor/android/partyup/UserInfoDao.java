@@ -22,6 +22,9 @@ public interface UserInfoDao {
     @Query("SELECT eventTitle, eventDate, eventTime FROM UserReservations")
     List<Events> userReservations();
 
+    @Query("SELECT eventTitle, eventDate, eventTime FROM OwnerCreatedEvents")
+    List<CreatedEvents> createdEvents();
+
     @Query("SELECT eventTitle, eventDate, eventTime FROM UserSavedEvents")
     List<Events> userSavedEvents();
 
@@ -37,6 +40,12 @@ public interface UserInfoDao {
     @Query("SELECT user_name FROM user")
     String getUserName();
 
+    @Query("SELECT tax_owner FROM user")
+    String getTaxOfOwner();
+
+    @Query("SELECT addressOwner FROM user")
+    String getAddressOfCaffee();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUser(User user);
 
@@ -45,5 +54,8 @@ public interface UserInfoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveEvent(UserSavedEvents userSavedEvents);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertNewCreatedEvent(OwnerCreatedEvents ownerCreatedEvents);
 
 }

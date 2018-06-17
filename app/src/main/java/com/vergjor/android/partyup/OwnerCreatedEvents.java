@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 @Entity(indices = {@Index(value = {"eventTitle"},
         unique = true)}
 )
-public class UserSavedEvents {
+public class OwnerCreatedEvents {
 
     @PrimaryKey
     @NonNull
@@ -24,12 +24,17 @@ public class UserSavedEvents {
     @ColumnInfo
     public String taxNumber;
 
+    @ColumnInfo
+    public String numReservations;
 
-    UserSavedEvents(String eventTitle, String eventDate, String eventTime, String taxNumber){
+
+
+    OwnerCreatedEvents(String eventTitle, String eventDate, String eventTime, String taxNumber, String numReservations){
         this.eventTitle = eventTitle;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
         this.taxNumber = taxNumber;
+        this.numReservations = numReservations;
     }
 
 }
