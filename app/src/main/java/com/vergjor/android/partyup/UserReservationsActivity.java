@@ -40,7 +40,7 @@ public class UserReservationsActivity extends AppCompatActivity {
         else {
             textView.setText("");
             for (Events e : db.userInfoDao().userReservations()) {
-                listEvents.add(new Events(e.eventTitle, e.eventDate, e.eventTime));
+                listEvents.add(new Events(e.eventTitle, e.eventDate, e.eventTime, e.taxNumber));
             }
             db.close();
         }

@@ -2,7 +2,6 @@ package com.vergjor.android.partyup;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +43,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success= jsonResponse.getBoolean("success");
                             if (success){
-                                db.userInfoDao().insertUser(new User(name, 1));
+                                db.userInfoDao().insertUser(new User(name, 1, ""));
                                 db.close();
                                 Intent intent = new Intent(ClientRegisterActivity.this, ClientActivity.class);
                                 ClientRegisterActivity.this.startActivity(intent);

@@ -57,7 +57,7 @@ public class SavedEventsActivity extends AppCompatActivity{
         else {
             textView.setText("");
             for (Events e : db.userInfoDao().userSavedEvents()) {
-                listEvents.add(new Events(e.eventTitle, e.eventDate, e.eventTime));
+                listEvents.add(new Events(e.eventTitle, e.eventDate, e.eventTime, e.taxNumber));
             }
             db.close();
         }

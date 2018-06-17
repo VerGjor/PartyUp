@@ -16,14 +16,19 @@ public class User {
     @ColumnInfo(name = "user_type")
     public int user_type;
 
-    public User(String userName, int user_type){
+    @ColumnInfo(name = "tax_owner")
+    public String tax_owner;
+
+    public User(String userName, int user_type, String tax_owner){
         this.userName = userName;
         this.user_type = user_type;
+        this.tax_owner = tax_owner;
     }
 
     public int getUserType(){
         return user_type;
     }
+    public String getTax_owner(){ return tax_owner; }
 
 }
 

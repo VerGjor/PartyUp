@@ -16,7 +16,7 @@ public class ListEvents {
         this.timeOfEvent = timeOfEvent;
        // this.eventPoster = eventPoster;
         this.eventNumberOfReservations = eventNumberOfReservations;
-        btax=b_tax;
+        this.btax=b_tax;
     }
 
 

@@ -21,10 +21,14 @@ public class UserReservations {
     @ColumnInfo
     public String eventDate;
 
-    public UserReservations(String eventTitle, String eventDate, String eventTime){
+    @ColumnInfo
+    public String taxNumber;
+
+    public UserReservations(String eventTitle, String eventDate, String eventTime, String taxNumber){
         this.eventTitle = eventTitle;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
+        this.taxNumber = taxNumber;
     }
 
 }

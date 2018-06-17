@@ -3,7 +3,6 @@ package com.vergjor.android.partyup;
 import android.app.Dialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -100,7 +99,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                         userReservations = new UserReservations(
                                 listItem.getEventName(),
                                 listItem.getDateOfEvent(),
-                                listItem.getTimeOfEvent());
+                                listItem.getTimeOfEvent(),
+                                listItem.getBtax());
                         reserveEventATask task = new reserveEventATask();
 
                         lock.release();
@@ -110,9 +110,9 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                             if(already_saved){
                                 Toast.makeText(context, "You already have a reservation", Toast.LENGTH_SHORT).show();
                             }
-                            else
+                            else {
                                 Toast.makeText(context, "You made a reservation", Toast.LENGTH_SHORT).show();
-
+                            }
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -150,48 +150,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                 });
 
 
-                final UserDatabase db = Room.databaseBuilder(RecyclerAdapter.context,
-                        UserDatabase.class, "user-database").allowMainThreadQueries().build();
-
-                ImageButton btn_res=myDialog.findViewById(R.id.reserve_btn);
-                btn_res.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        final String uname = db.userInfoDao().getUserName();
-                        final String e_name = listItem.getEventName();
-                        final String b_tax=listItem.getBtax();
-
-                        Response.Listener<String> responseListener = new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    JSONObject jsonResponse = new JSONObject(response);
-                                    boolean success= jsonResponse.getBoolean("success");
-                                    if (success){
-
-                                        Intent intent = new Intent(RecyclerAdapter.context, ClientActivity.class);
-                                        RecyclerAdapter.context.startActivity(intent);
-                                    }
-                                    else{
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(RecyclerAdapter.context);
-                                        builder.setMessage("Failed")
-                                                .setNegativeButton("Retry", null)
-                                                .create()
-                                                .show();
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        };
-
-                        ReserveRequest registerRequest = new ReserveRequest(uname, e_name,b_tax,  responseListener);
-                        RequestQueue queue = Volley.newRequestQueue(RecyclerAdapter.context);
-                        queue.add(registerRequest);
-                    }
-                });
-
-                        myDialog.show();
+                myDialog.show();
 
 
             }
@@ -277,7 +236,11 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private static class reserveEventATask extends AsyncTask<Void, Void, Void> {
 
         UserDatabase db = Room.databaseBuilder(context,
-                UserDatabase.class, "user-database").build();
+                UserDatabase.class, "user-database").allowMainThreadQueries().build();
+
+        final String uname = db.userInfoDao().getUserName();
+        final String e_name = userReservations.eventTitle;
+        final String b_tax= userReservations.taxNumber;
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -296,6 +259,30 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     already_saved = true;
                 else {
                     already_saved = false;
+
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean success= jsonResponse.getBoolean("success");
+                                if (!success){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(RecyclerAdapter.context);
+                                    builder.setMessage("Failed")
+                                            .setNegativeButton("Retry", null)
+                                            .create()
+                                            .show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+
+                    ReserveRequest registerRequest = new ReserveRequest(uname, e_name,b_tax,  responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(RecyclerAdapter.context);
+                    queue.add(registerRequest);
+
                     db.userInfoDao().insertNewReservation(userReservations);
                     for(Events e : db.userInfoDao().userSavedEvents()){
                         if(userReservations.eventTitle.equals(e.eventTitle)){

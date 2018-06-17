@@ -56,7 +56,8 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
                     userReservations = new UserReservations(
                             listItems.get(i).eventTitle,
                             listItems.get(i).eventDate,
-                            listItems.get(i).eventTime);
+                            listItems.get(i).eventTime,
+                            listItems.get(i).taxNumber);
                     reserveEventATask task = new reserveEventATask();
                     task.execute();
                     Toast.makeText(context, "You have a reservation", Toast.LENGTH_SHORT).show();
