@@ -1,20 +1,19 @@
 package com.vergjor.android.partyup;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-
-import android.arch.persistence.room.Room;
-import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,20 +24,23 @@ import java.util.Map;
 public class AddEventActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_GET = 1;
-    final EditText e_name=findViewById(R.id.txteventname);
-    final EditText nr_R=findViewById(R.id.txtReservInt);
-    final Button subm=findViewById(R.id.btnSubmitAdd);
-    final Button imagepick=findViewById(R.id.btnImagePick);
+    static EditText e_name;
+    static EditText nr_R;
+    static Button subm;
+    static Button imagepick;
     String url;
-    final UserDatabase db = Room.databaseBuilder(getApplicationContext(),
-            UserDatabase.class, "user-database").allowMainThreadQueries().build();
+    //final UserDatabase db = Room.databaseBuilder(getApplicationContext(),
+    //        UserDatabase.class, "user-database").allowMainThreadQueries().build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
-
+        e_name = findViewById(R.id.txteventname);
+        nr_R=findViewById(R.id.txtReservInt);
+        subm=findViewById(R.id.btnSubmitAdd);
+        imagepick=findViewById(R.id.btnImagePick);
 
         subm.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.vergjor.android.partyup">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -36,7 +37,9 @@
         <activity android:name=".OwnerProfileActivity" />
         <activity android:name=".SavedEventsActivity" />
         <activity android:name=".UserReservationsActivity" />
-        <activity android:name=".AddEventActivity"></activity>
+        <activity android:name=".AddEventActivity" />
+        <activity android:name=".UserAreaActivity" />
+
     </application>
 
 </manifest>
