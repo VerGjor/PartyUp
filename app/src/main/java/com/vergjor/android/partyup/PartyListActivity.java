@@ -58,7 +58,7 @@ public class PartyListActivity extends AppCompatActivity {
                                 int eventNumberOfReservations = eventsObject.getInt("Reservations");
                                 String eventDate = eventsObject.getString("Time");
                                 String[] split = eventDate.split(" ");
-                                listEvents.add(new ListEvents(eventName, split[0], split[1], eventNumberOfReservations));
+                                listEvents.add(new ListEvents(eventName, split[0], split[1], eventNumberOfReservations, "fsa"));
 
                             }
 
