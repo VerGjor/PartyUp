@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <meta-data
+        android:name="CLOUDINARY_URL"
+        android:value="cloudinary://@ddx3ayaed"/>
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/logo"
@@ -32,6 +36,7 @@
         <activity android:name=".OwnerProfileActivity" />
         <activity android:name=".SavedEventsActivity" />
         <activity android:name=".UserReservationsActivity" />
+        <activity android:name=".AddEventActivity"></activity>
     </application>
 
 </manifest>
