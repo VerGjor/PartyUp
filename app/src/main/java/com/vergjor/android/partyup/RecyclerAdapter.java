@@ -169,7 +169,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                                     boolean success= jsonResponse.getBoolean("success");
                                     if (success){
 
-                                        Intent intent = new Intent(RecyclerAdapter.context, ReserveRequest.class);
+                                        Intent intent = new Intent(RecyclerAdapter.context, ClientActivity.class);
                                         RecyclerAdapter.context.startActivity(intent);
                                     }
                                     else{
