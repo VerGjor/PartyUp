@@ -13,6 +13,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.cloudinary.Cloudinary;
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.UploadRequest;
 import com.cloudinary.utils.ObjectUtils;
 
 import org.json.JSONException;
@@ -23,12 +25,12 @@ import java.util.Map;
 
 public class AddEventActivity extends AppCompatActivity {
 
-    static final int REQUEST_IMAGE_GET = 1;
+    static final int RESULT_LOAD_IMG = 1;
     static EditText e_name;
     static EditText nr_R;
     static Button subm;
     static Button imagepick;
-    String url;
+    static String url;
     //final UserDatabase db = Room.databaseBuilder(getApplicationContext(),
     //        UserDatabase.class, "user-database").allowMainThreadQueries().build();
 
@@ -85,25 +87,23 @@ public class AddEventActivity extends AppCompatActivity {
 
 
                 Intent intent = new Intent(Intent.ACTION_PICK);
-
+                intent.setType("image/*");
                 if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(intent, REQUEST_IMAGE_GET);
+                    startActivityForResult(intent, RESULT_LOAD_IMG);
                 }
 
             }
 
+
             protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-                if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
+                AddEventActivity.super.onActivityResult(requestCode,resultCode,data);
+
+
+                if (resultCode == RESULT_OK) {
                     Uri fullPhotoUri = data.getData();
 
-                    Cloudinary cloudinary = new Cloudinary();
-                    try {
-                        Map result=cloudinary.uploader().upload(fullPhotoUri, ObjectUtils.emptyMap());
+                    url = MediaManager.get().upload(fullPhotoUri).dispatch();
 
-                        url=result.get("url").toString();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                 }
             }
