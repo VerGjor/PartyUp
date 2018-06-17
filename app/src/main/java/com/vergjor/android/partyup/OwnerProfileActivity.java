@@ -35,7 +35,7 @@ public class OwnerProfileActivity extends AppCompatActivity {
     }
 
     public void createNewEvent(View v){
-        Intent registerIntent = new Intent(this, AddActivity.class);
+        Intent registerIntent = new Intent(this, AddEventActivity.class);
         startActivity(registerIntent);
     }
 
