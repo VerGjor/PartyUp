@@ -8,14 +8,15 @@ public class ListEvents {
     //private String eventPoster;
     //private int eventTax;
     private int eventNumberOfReservations;
+    private String btax;
 
-
-    public ListEvents(String eventName, String dateOfEvent, String timeOfEvent, int eventNumberOfReservations){
+    public ListEvents(String eventName, String dateOfEvent, String timeOfEvent, int eventNumberOfReservations,String b_tax){
         this.eventName = eventName;
         this.dateOfEvent = dateOfEvent;
         this.timeOfEvent = timeOfEvent;
        // this.eventPoster = eventPoster;
         this.eventNumberOfReservations = eventNumberOfReservations;
+        btax=b_tax;
     }
 
 
@@ -43,4 +44,7 @@ public class ListEvents {
         eventNumberOfReservations++;
     }
 
+    public String getBtax() {
+        return btax;
+    }
 }

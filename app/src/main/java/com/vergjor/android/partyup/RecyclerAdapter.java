@@ -3,9 +3,11 @@ package com.vergjor.android.partyup;
 import android.app.Dialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +17,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.concurrent.Semaphore;
@@ -139,7 +148,52 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
                     }
                 });
-                myDialog.show();
+
+
+                final UserDatabase db = Room.databaseBuilder(RecyclerAdapter.context,
+                        UserDatabase.class, "user-database").allowMainThreadQueries().build();
+
+                ImageButton btn_res=myDialog.findViewById(R.id.reserve_btn);
+                btn_res.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final String uname = db.userInfoDao().getUserName();
+                        final String e_name = listItem.getEventName();
+                        final String b_tax=listItem.getBtax();
+
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    boolean success= jsonResponse.getBoolean("success");
+                                    if (success){
+
+                                        Intent intent = new Intent(RecyclerAdapter.context, ReserveRequest.class);
+                                        RecyclerAdapter.context.startActivity(intent);
+                                    }
+                                    else{
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(RecyclerAdapter.context);
+                                        builder.setMessage("Failed")
+                                                .setNegativeButton("Retry", null)
+                                                .create()
+                                                .show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+
+                        ReserveRequest registerRequest = new ReserveRequest(uname, e_name,b_tax,  responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(RecyclerAdapter.context);
+                        queue.add(registerRequest);
+                    }
+                });
+
+                        myDialog.show();
+
+
             }
         });
 
@@ -221,7 +275,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     }
 
     private static class reserveEventATask extends AsyncTask<Void, Void, Void> {
-
 
         UserDatabase db = Room.databaseBuilder(context,
                 UserDatabase.class, "user-database").build();

@@ -2,6 +2,7 @@ package com.vergjor.android.partyup;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 public class ClientRegisterActivity extends AppCompatActivity {
 
