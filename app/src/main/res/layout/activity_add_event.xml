@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/alc"
     tools:context="com.vergjor.android.partyup.AddEventActivity"
     tools:layout_editor_absoluteY="81dp">
 
 
     <EditText
+        android:theme="@style/EditTextTheme"
         android:id="@+id/txteventname"
         android:layout_width="wrap_content"
         android:layout_height="49dp"
@@ -17,7 +19,7 @@
         android:layout_marginTop="36dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Event name"
+        android:hint="Event name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,12 +30,19 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:text="Image"
+        android:textColor="#B9B7A7"
+        android:background="@drawable/round_button"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="286dp" />
+        tools:layout_editor_absoluteY="286dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtTime"/>
 
     <EditText
+
+        android:theme="@style/EditTextTheme"
         android:id="@+id/txtReservInt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,38 +51,40 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="number"
-        android:text="Number of reservations"
+        android:hint="Number of reservations"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txteventname" />
 
     <EditText
+        android:theme="@style/EditTextTheme"
         android:id="@+id/txtTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="number"
-        android:text="Time/Date"
+        android:hint="Time/Date"
         app:layout_constraintBottom_toTopOf="@+id/btnImagePick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtReservInt"
         app:layout_constraintVertical_bias="0.405" />
-        " />
 
     <Button
         android:id="@+id/btnSubmitAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="Submit"
+        android:textColor="#B9B7A7"
+        android:background="@drawable/round_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
