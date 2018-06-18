@@ -1,6 +1,9 @@
 package com.vergjor.android.partyup;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +23,7 @@ class RecyclerAdapterOwnerCreatedEvents extends RecyclerView.Adapter<RecyclerAda
 
     private List<CreatedEvents> listItems;
     private static Context context;
+    private Dialog myDialog;
 
     public RecyclerAdapterOwnerCreatedEvents(List<CreatedEvents> listItems, Context context){
         this.listItems = listItems;
@@ -47,6 +51,24 @@ class RecyclerAdapterOwnerCreatedEvents extends RecyclerView.Adapter<RecyclerAda
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_layout, viewGroup, false);
         final ViewHolder viewHolder = new ViewHolder(v);
+
+        myDialog = new Dialog(context);
+        myDialog.setContentView(R.layout.detailed_created_card);
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        viewHolder.cardInfo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                final CreatedEvents listItem = listItems.get(viewHolder.getAdapterPosition());
+                final TextView dialog_title_tv = myDialog.findViewById(R.id.event_name);
+
+                ImageView dialog_image_img= myDialog.findViewById(R.id.card_image);
+                dialog_title_tv.setText(listItem.eventTitle);
+
+                dialog_image_img.setImageResource(R.drawable.screenshot_2);
+                myDialog.show();
+            }
+        });
 
         return viewHolder;
     }
