@@ -32,7 +32,7 @@ public class AddEventActivity extends AppCompatActivity {
     static Button imagepick;
     static String url;
     static String eventDate;
-    static String eventTime;
+    static EditText eventTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class AddEventActivity extends AppCompatActivity {
         subm=findViewById(R.id.btnSubmitAdd);
         imagepick=findViewById(R.id.btnImagePick);
         eventDate = "24.06.2018";
-        eventTime = "00:00:00";
+        eventTime = findViewById(R.id.txtTime);
         url = "url";
 
         subm.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +76,8 @@ public class AddEventActivity extends AppCompatActivity {
                 UserDatabase db = Room.databaseBuilder(getApplicationContext(),
                         UserDatabase.class, "user-database").allowMainThreadQueries().build();
 
-                AddEventRequest registerRequest = new AddEventRequest(e_name.getText().toString(), db.userInfoDao().getTaxOfOwner() ,url ,nr_R.getText().toString(), responseListener);
-                db.userInfoDao().insertNewCreatedEvent(new OwnerCreatedEvents(e_name.getText().toString(),eventDate, eventTime, db.userInfoDao().getTaxOfOwner(), nr_R.getText().toString()));
+                AddEventRequest registerRequest = new AddEventRequest(e_name.getText().toString(), db.userInfoDao().getTaxOfOwner() ,url ,nr_R.getText().toString() ,eventTime.getText().toString(),responseListener);
+                db.userInfoDao().insertNewCreatedEvent(new OwnerCreatedEvents(e_name.getText().toString(),eventDate, eventTime.getText().toString(), db.userInfoDao().getTaxOfOwner(), nr_R.getText().toString()));
                 db.close();
 
                 RequestQueue queue = Volley.newRequestQueue(AddEventActivity.this);
