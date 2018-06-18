@@ -1,5 +1,6 @@
 package com.vergjor.android.partyup;
 
+import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,9 +22,13 @@ import org.json.JSONObject;
 public class AddEventActivity extends AppCompatActivity {
 
     static final int RESULT_LOAD_IMG = 1;
+    @SuppressLint("StaticFieldLeak")
     static EditText e_name;
+    @SuppressLint("StaticFieldLeak")
     static EditText nr_R;
+    @SuppressLint("StaticFieldLeak")
     static Button subm;
+    @SuppressLint("StaticFieldLeak")
     static Button imagepick;
     static String url;
     static String eventDate;
@@ -52,8 +57,7 @@ public class AddEventActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success= jsonResponse.getBoolean("success");
                             if (success){
-                                Intent intent = new Intent(AddEventActivity.this, OwnerProfileActivity.class);
-                                AddEventActivity.this.startActivity(intent);
+                                finish();
                             }
                             else{
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AddEventActivity.this);

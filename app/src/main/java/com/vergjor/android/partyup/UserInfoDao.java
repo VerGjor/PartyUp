@@ -22,13 +22,13 @@ public interface UserInfoDao {
     @Query("SELECT COUNT(eventTitle) FROM OwnerCreatedEvents")
     int numberOfOwnerCreatedEvents();
 
-    @Query("SELECT eventTitle, eventDate, eventTime FROM UserReservations")
+    @Query("SELECT * FROM UserReservations")
     List<Events> userReservations();
 
-    @Query("SELECT eventTitle, eventDate, eventTime FROM OwnerCreatedEvents")
+    @Query("SELECT * FROM OwnerCreatedEvents")
     List<CreatedEvents> createdEvents();
 
-    @Query("SELECT eventTitle, eventDate, eventTime FROM UserSavedEvents")
+    @Query("SELECT * FROM UserSavedEvents")
     List<Events> userSavedEvents();
 
     @Query("DELETE FROM UserSavedEvents WHERE eventTitle LIKE :etitle")

@@ -13,17 +13,17 @@ import java.util.Map;
 
 public class ReserveRequest extends StringRequest {
 
+
     private static final String REGISTER_REQUEST_URL = "https://mpip.000webhostapp.com/ReserveEvent.php";
-    private Map<String,String> params;
-    public ReserveRequest(String cl_name, String event, String b_tax ,Response.Listener<String> listener){
+    private Map<String, String> params;
+
+    public ReserveRequest(String cl_name, String event, String b_tax, Response.Listener<String> listener) {
 
         super(Request.Method.POST, REGISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();
         params.put("cl_name", cl_name);
         params.put("event", event);
-        params.put("b_tax",b_tax);
-
-
+        params.put("b_tax", b_tax);
 
     }
 
@@ -31,4 +31,5 @@ public class ReserveRequest extends StringRequest {
     public Map<String, String> getParams() {
         return params;
     }
+
 }

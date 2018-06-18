@@ -16,9 +16,6 @@ public class RegisterClientRequest extends StringRequest {
          params = new HashMap<>();
          params.put("name", name);
          params.put("mob_tel", phone);
-
-
-
      }
 
     @Override

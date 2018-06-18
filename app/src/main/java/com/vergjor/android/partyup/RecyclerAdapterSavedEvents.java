@@ -1,11 +1,13 @@
 package com.vergjor.android.partyup;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,19 +18,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAdapterSavedEvents.ViewHolder> {
 
     private static List<Events> listItems;
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
     private Dialog myDialog;
     static private UserReservations userReservations;
     static int i;
+    static boolean wasSuccessful;
 
-    public RecyclerAdapterSavedEvents(List<Events> listItems, Context context){
-        this.context = context;
-        this.listItems = listItems;
+    static Semaphore lock1 = new Semaphore(0);
+    static Semaphore lock2 = new Semaphore(0);
+
+    RecyclerAdapterSavedEvents(List<Events> listItems, Context context){
+        RecyclerAdapterSavedEvents.context = context;
+        RecyclerAdapterSavedEvents.listItems = listItems;
     }
 
 
@@ -36,53 +51,22 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
 
         private CardView cardInfo;
 
-        public TextView itemTitle;
+        TextView itemTitle;
         public ImageView imageView;
-        public ImageButton btnReserve;
-        public ImageButton btnRemove;
+        ImageButton btnReserve;
+        ImageButton btnRemove;
 
 
-        public ViewHolder(final View itemView) {
+        ViewHolder(final View itemView) {
             super(itemView);
             cardInfo = itemView.findViewById(R.id.card_view_saved_events);
             itemTitle = itemView.findViewById(R.id.event_title_saved);
             btnReserve = itemView.findViewById(R.id.makeReservation);
             btnRemove = itemView.findViewById(R.id.removeCurrentEvent);
 
-            btnReserve.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    i = getAdapterPosition();
-                    userReservations = new UserReservations(
-                            listItems.get(i).eventTitle,
-                            listItems.get(i).eventDate,
-                            listItems.get(i).eventTime,
-                            listItems.get(i).taxNumber);
-                    reserveEventATask task = new reserveEventATask();
-                    task.execute();
-                    Toast.makeText(context, "You have a reservation", Toast.LENGTH_SHORT).show();
-                }
-            });
 
-            btnRemove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v){
-                    i = getAdapterPosition();
-                    UserDatabase db = Room.databaseBuilder(context,
-                            UserDatabase.class, "user-database").allowMainThreadQueries().build();
-                    db.userInfoDao().deleteSavedEvent(listItems.get(i).eventTitle);
-                    listItems.remove(i);
-                    SavedEventsActivity.adapter.notifyItemRemoved(i);
-                    Toast.makeText(context, "Event removed", Toast.LENGTH_SHORT).show();
-
-                    if(db.userInfoDao().numberOfSavedEvents() == 0)
-                        SavedEventsActivity.textView.setText("You have no saved events");
-                    db.close();
-                }
-            });
         }
     }
-
 
 
     @Override
@@ -112,6 +96,62 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
             }
         });
 
+        viewHolder.btnReserve.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v) {
+
+                final Events listItem = listItems.get(viewHolder.getAdapterPosition());
+                i = viewHolder.getAdapterPosition();
+
+                userReservations = new UserReservations(
+                        listItem.eventTitle,
+                        listItem.eventDate,
+                        listItem.eventTime,
+                        listItem.taxNumber);
+                reserveEventATask task = new reserveEventATask();
+
+                lock1.release();
+                task.execute();
+                try {
+                    lock2.acquire();
+
+                    Toast.makeText(context, "You have a reservation", Toast.LENGTH_SHORT).show();
+
+                    UserDatabase db = Room.databaseBuilder(context,
+                            UserDatabase.class, "user-database").allowMainThreadQueries().build();
+
+                    if(db.userInfoDao().numberOfSavedEvents() == 0)
+                        SavedEventsActivity.textView.setText("You have no saved events");
+
+                    db.close();
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        viewHolder.btnRemove.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v){
+
+                final Events listItem = listItems.get(viewHolder.getAdapterPosition());
+                i = viewHolder.getAdapterPosition();
+                UserDatabase db = Room.databaseBuilder(context,
+                        UserDatabase.class, "user-database").allowMainThreadQueries().build();
+                db.userInfoDao().deleteSavedEvent(listItem.eventTitle);
+                listItems.remove(viewHolder.getAdapterPosition());
+                SavedEventsActivity.adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                Toast.makeText(context, "Event removed", Toast.LENGTH_SHORT).show();
+
+                if(db.userInfoDao().numberOfSavedEvents() == 0)
+                    SavedEventsActivity.textView.setText("You have no saved events");
+                db.close();
+            }
+        });
+
         return viewHolder;
     }
 
@@ -130,25 +170,54 @@ public class RecyclerAdapterSavedEvents extends RecyclerView.Adapter<RecyclerAda
 
 
         UserDatabase db = Room.databaseBuilder(context,
-                UserDatabase.class, "user-database").build();
+                UserDatabase.class, "user-database").allowMainThreadQueries().build();
+
+        final String uname = db.userInfoDao().getUserName();
+        final String e_name =  userReservations.eventTitle;
+        final String b_tax= userReservations.taxNumber;
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(Void... voids){
             try{
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success= jsonResponse.getBoolean("success");
+                            if (!success){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context.getApplicationContext());
+                                builder.setMessage("Failed")
+                                        .setNegativeButton("Retry", null)
+                                        .create()
+                                        .show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                ReserveRequest registerRequest = new ReserveRequest(uname, e_name, b_tax, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(context.getApplicationContext());
+                queue.add(registerRequest);
+
                 db.userInfoDao().insertNewReservation(userReservations);
                 db.userInfoDao().deleteSavedEvent(userReservations.eventTitle);
                 listItems.remove(i);
                 SavedEventsActivity.adapter.notifyItemRemoved(i);
-                if(db.userInfoDao().numberOfSavedEvents() == 0)
-                    SavedEventsActivity.textView.setText("You have no saved events");
+
+                lock1.acquire();
+                lock2.release();
+
+                db.close();
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
-            finally {
-                db.close();
-            }
             return null;
         }
+
     }
 }
