@@ -43,7 +43,6 @@ public class AddEventActivity extends AppCompatActivity {
         nr_R=findViewById(R.id.txtReservInt);
         subm=findViewById(R.id.btnSubmitAdd);
         imagepick=findViewById(R.id.btnImagePick);
-        eventDate = "24.06.2018";
         eventTime = findViewById(R.id.txtTime);
         url = "url";
 
@@ -76,8 +75,11 @@ public class AddEventActivity extends AppCompatActivity {
                 UserDatabase db = Room.databaseBuilder(getApplicationContext(),
                         UserDatabase.class, "user-database").allowMainThreadQueries().build();
 
-                AddEventRequest registerRequest = new AddEventRequest(e_name.getText().toString(), db.userInfoDao().getTaxOfOwner() ,url ,nr_R.getText().toString() ,eventTime.getText().toString(),responseListener);
-                db.userInfoDao().insertNewCreatedEvent(new OwnerCreatedEvents(e_name.getText().toString(),eventDate, eventTime.getText().toString(), db.userInfoDao().getTaxOfOwner(), nr_R.getText().toString()));
+                AddEventRequest registerRequest = new AddEventRequest(e_name.getText().toString(), db.userInfoDao().getTaxOfOwner() ,url ,nr_R.getText().toString() , eventTime.getText().toString(),responseListener);
+
+                String temp = eventTime.getText().toString();
+                String split[] = temp.split(" ");
+                db.userInfoDao().insertNewCreatedEvent(new OwnerCreatedEvents(e_name.getText().toString(),split[0], split[1], db.userInfoDao().getTaxOfOwner(), nr_R.getText().toString()));
                 db.close();
 
                 RequestQueue queue = Volley.newRequestQueue(AddEventActivity.this);

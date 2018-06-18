@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Saved events"
         android:textSize="30sp"
-        android:textColor="#736d5f"
+        android:textColor="#B9B7A7"
         android:layout_centerInParent="true"
         android:layout_below="@id/cover_saved"/>
 

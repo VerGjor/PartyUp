@@ -68,7 +68,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:inputType="number"
+        android:inputType="datetime"
         android:textColor="#B9B7A7"
         android:hint="Date/Time"
         app:layout_constraintBottom_toTopOf="@+id/btnImagePick"
