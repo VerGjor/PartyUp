@@ -45,6 +45,7 @@ public class AddEventActivity extends AppCompatActivity {
         imagepick=findViewById(R.id.btnImagePick);
         eventDate = "24.06.2018";
         eventTime = "00:00:00";
+        url = "url";
 
         subm.setOnClickListener(new View.OnClickListener() {
             @Override
