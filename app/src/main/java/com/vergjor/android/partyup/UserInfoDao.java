@@ -19,6 +19,9 @@ public interface UserInfoDao {
     @Query("SELECT COUNT(eventTitle) FROM UserReservations")
     int numberOfUserReservations();
 
+    @Query("SELECT COUNT(eventTitle) FROM OwnerCreatedEvents")
+    int numberOfOwnerCreatedEvents();
+
     @Query("SELECT eventTitle, eventDate, eventTime FROM UserReservations")
     List<Events> userReservations();
 

@@ -50,7 +50,7 @@ public class OwnerCreatedEventsActivity extends AppCompatActivity{
 
         UserDatabase db = Room.databaseBuilder(getApplicationContext(),
                 UserDatabase.class, "user-database").allowMainThreadQueries().build();
-        int n = db.userInfoDao().numberOfSavedEvents();
+        int n = db.userInfoDao().numberOfOwnerCreatedEvents();
         textView = findViewById(R.id.SavedEventsMsg);
 
         if(n == 0){
