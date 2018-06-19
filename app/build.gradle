@@ -5,6 +5,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.vergjor.android.partyup"
         minSdkVersion 22

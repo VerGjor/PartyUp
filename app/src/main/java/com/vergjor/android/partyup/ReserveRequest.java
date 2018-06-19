@@ -17,7 +17,7 @@ public class ReserveRequest extends StringRequest {
     private static final String REGISTER_REQUEST_URL = "https://mpip.000webhostapp.com/ReserveEvent.php";
     private Map<String, String> params;
 
-    public ReserveRequest(String cl_name, String event, String b_tax, Response.Listener<String> listener) {
+    ReserveRequest(String cl_name, String event, String b_tax, Response.Listener<String> listener) {
 
         super(Request.Method.POST, REGISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();

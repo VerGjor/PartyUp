@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,13 +16,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 public class RecyclerAdapterMyReservations extends RecyclerView.Adapter<RecyclerAdapterMyReservations.ViewHolder> {
 
     private static List<Events> listItems;
     private static Context context;
     private Dialog myDialog;
+
+    static Semaphore lock1 = new Semaphore(0);
+    static Semaphore lock2 = new Semaphore(0);
 
     public RecyclerAdapterMyReservations(List<Events> listItems, Context context){
         this.context = context;
@@ -47,18 +59,50 @@ public class RecyclerAdapterMyReservations extends RecyclerView.Adapter<Recycler
             btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
+
                     int i = getAdapterPosition();
                     UserDatabase db = Room.databaseBuilder(context,
                             UserDatabase.class, "user-database").allowMainThreadQueries().build();
-                    db.userInfoDao().deleteReservation(listItems.get(i).eventTitle);
-                    listItems.remove(i);
-                    UserReservationsActivity.adapter.notifyItemRemoved(i);
-                    Toast.makeText(context, "Reservation canceled", Toast.LENGTH_SHORT).show();
 
-                    if(db.userInfoDao().numberOfUserReservations() == 0)
-                        UserReservationsActivity.textView.setText("You have no reservations");
-                    // treba da se dopolnitelno otstrane od bazata
-                    db.close();
+                    try {
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    boolean success = jsonResponse.getBoolean("success");
+                                    if (!success) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(RecyclerAdapterMyReservations.context);
+                                        builder.setMessage("Failed")
+                                                .setNegativeButton("Retry", null)
+                                                .create()
+                                                .show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+
+                        CancelReservationRequest cancelRequest = new CancelReservationRequest(db.userInfoDao().getUserName(), listItems.get(i).eventTitle, listItems.get(i).taxNumber, responseListener);
+                        CustomHurlStack customHurlStack = new CustomHurlStack();
+                        RequestQueue queue = Volley.newRequestQueue(RecyclerAdapterMyReservations.context, customHurlStack);
+                        queue.add(cancelRequest);
+
+                        db.userInfoDao().deleteReservation(listItems.get(i).eventTitle);
+                        listItems.remove(i);
+                        UserReservationsActivity.adapter.notifyItemRemoved(i);
+                        Toast.makeText(context, "Reservation canceled", Toast.LENGTH_SHORT).show();
+
+                        if (db.userInfoDao().numberOfUserReservations() == 0)
+                            UserReservationsActivity.textView.setText("You have no reservations");
+                    }
+                    catch (Exception e){
+                        e.getMessage();
+                    }
+                    finally {
+                        db.close();
+                    }
                 }
             });
         }
