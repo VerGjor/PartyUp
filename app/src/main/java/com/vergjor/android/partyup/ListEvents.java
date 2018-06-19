@@ -9,16 +9,21 @@ public class ListEvents {
     //private int eventTax;
     private int eventNumberOfReservations;
     private String btax;
-
-    public ListEvents(String eventName, String dateOfEvent, String timeOfEvent, int eventNumberOfReservations,String b_tax){
+    private String location;
+    public ListEvents(String eventName, String dateOfEvent, String timeOfEvent, int eventNumberOfReservations,String b_tax,String location){
         this.eventName = eventName;
         this.dateOfEvent = dateOfEvent;
         this.timeOfEvent = timeOfEvent;
        // this.eventPoster = eventPoster;
         this.eventNumberOfReservations = eventNumberOfReservations;
         this.btax=b_tax;
+        this.location=location;
     }
 
+
+    public String getLocation() {
+        return location;
+    }
 
     public String getEventName(){
         return eventName;

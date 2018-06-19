@@ -55,9 +55,10 @@ public class PartyListActivity extends AppCompatActivity {
                                // String eventPoster = eventsObject.getString("Picture");
                                 int eventNumberOfReservations = eventsObject.getInt("Reservations");
                                 String eventDate = eventsObject.getString("Time");
-                                String b_tax=eventsObject.getString(("B_Tax"));
+                                String b_tax=eventsObject.getString("B_Tax");
+                                String loc=eventsObject.getString("Location");
                                 String[] split = eventDate.split(" ");
-                                listEvents.add(new ListEvents(eventName, split[0], split[1], eventNumberOfReservations,b_tax));
+                                listEvents.add(new ListEvents(eventName, split[0], split[1], eventNumberOfReservations,b_tax,loc));
 
                             }
 

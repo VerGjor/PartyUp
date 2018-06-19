@@ -3,8 +3,11 @@ package com.vergjor.android.partyup;
 import android.app.Dialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -116,6 +119,18 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+                    }
+                });
+
+                ImageButton loc=myDialog.findViewById(R.id.location_btn);
+
+                loc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Uri gmmIntentUri = Uri.parse("geo:0,0?q="+listItem.getLocation());
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        RecyclerAdapter.context.startActivity(mapIntent);
                     }
                 });
 
