@@ -26,7 +26,7 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
 
-public class CustomHurlStack implements HttpStack {
+public class HurlStack implements HttpStack {
 
     private static final String HEADER_CONTENT_TYPE = "Content-Type";
 
@@ -44,14 +44,14 @@ public class CustomHurlStack implements HttpStack {
     private final UrlRewriter mUrlRewriter;
     private final SSLSocketFactory mSslSocketFactory;
 
-    public CustomHurlStack() {
+    public HurlStack() {
         this(null);
     }
 
     /**
      * @param urlRewriter Rewriter to use for request URLs
      */
-    public CustomHurlStack(UrlRewriter urlRewriter) {
+    public HurlStack(UrlRewriter urlRewriter) {
         this(urlRewriter, null);
     }
 
@@ -59,7 +59,7 @@ public class CustomHurlStack implements HttpStack {
      * @param urlRewriter Rewriter to use for request URLs
      * @param sslSocketFactory SSL factory to use for HTTPS connections
      */
-    public CustomHurlStack(UrlRewriter urlRewriter, SSLSocketFactory sslSocketFactory) {
+    public HurlStack(UrlRewriter urlRewriter, SSLSocketFactory sslSocketFactory) {
         mUrlRewriter = urlRewriter;
         mSslSocketFactory = sslSocketFactory;
     }

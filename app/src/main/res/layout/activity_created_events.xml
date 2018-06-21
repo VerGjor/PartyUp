@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:gravity="center"
+    tools:context=".SavedEventsActivity">
+
+    <TextView
+        android:id="@+id/title_created_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Created events"
+        android:textSize="30sp"
+        android:layout_marginTop="60dp"
+        android:gravity="center_vertical"
+        android:textColor="#B9B7A7"
+        android:layout_alignParentTop="true"/>
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_created_events"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginTop="25dp"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
+        />
+
+    <TextView
+        android:id="@+id/created_event_msg"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:textColor="#9f6d91"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/appBarLayout"
+        android:layout_below="@id/title_saved_activity"
+        />
+
+    <fragment
+        android:name=""
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/created_event_info">
+
+    </fragment>
+
+
+</LinearLayout>
+

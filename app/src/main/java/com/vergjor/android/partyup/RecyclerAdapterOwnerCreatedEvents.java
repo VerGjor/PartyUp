@@ -49,7 +49,7 @@ class RecyclerAdapterOwnerCreatedEvents extends RecyclerView.Adapter<RecyclerAda
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_layout, viewGroup, false);
+                .inflate(R.layout.card_created_layout, viewGroup, false);
         final ViewHolder viewHolder = new ViewHolder(v);
 
         myDialog = new Dialog(context);

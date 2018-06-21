@@ -21,10 +21,8 @@ public class OwnerCreatedEventsActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_saved_events);
+        setContentView(R.layout.activity_created_events);
 
-        TextView title = findViewById(R.id.title_saved_activity);
-        title.setText("Created Events");
         updateData();
     }
 
@@ -42,14 +40,18 @@ public class OwnerCreatedEventsActivity extends AppCompatActivity{
 
     public void updateData(){
 
-        recyclerView = findViewById(R.id.recycler_saved_events);
+        RecyclerView.LayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+        recyclerView = findViewById(R.id.recycler_created_events);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(layoutManager);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         UserDatabase db = Room.databaseBuilder(getApplicationContext(),
                 UserDatabase.class, "user-database").allowMainThreadQueries().build();
         int n = db.userInfoDao().numberOfOwnerCreatedEvents();
-        textView = findViewById(R.id.SavedEventsMsg);
+        textView = findViewById(R.id.created_event_msg);
 
         if(n == 0){
             textView.setText("You have no events");

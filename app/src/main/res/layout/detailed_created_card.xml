@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,6 +37,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Date: "
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:id="@+id/event_date"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Date of Event"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -44,13 +68,29 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/number"
-                    android:layout_width="match_parent"
+                    android:layout_weight="3"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Time: "
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:id="@+id/event_time"
                     android:layout_weight="1"
-                    android:text="ClientsList"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textColor="@android:color/white" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Time of Event"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    />
+
             </LinearLayout>
 
 
@@ -60,6 +100,19 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="horizontal">
+
+
+                <ImageButton
+                    android:id="@+id/location_btn_detailed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="@drawable/shape_card"
+                    android:src="@drawable/location_btn" />
+
+
 
 
             </LinearLayout>

@@ -3,8 +3,10 @@ package com.vergjor.android.partyup;
 import android.app.Dialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -85,8 +87,8 @@ public class RecyclerAdapterMyReservations extends RecyclerView.Adapter<Recycler
                         };
 
                         CancelReservationRequest cancelRequest = new CancelReservationRequest(db.userInfoDao().getUserName(), listItems.get(i).eventTitle, listItems.get(i).taxNumber, responseListener);
-                        CustomHurlStack customHurlStack = new CustomHurlStack();
-                        RequestQueue queue = Volley.newRequestQueue(RecyclerAdapterMyReservations.context, customHurlStack);
+                        HurlStack hurlStack = new HurlStack();
+                        RequestQueue queue = Volley.newRequestQueue(RecyclerAdapterMyReservations.context, hurlStack);
                         queue.add(cancelRequest);
 
                         db.userInfoDao().deleteReservation(listItems.get(i).eventTitle);
@@ -124,6 +126,7 @@ public class RecyclerAdapterMyReservations extends RecyclerView.Adapter<Recycler
         viewHolder.cardInfo.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
                 final Events listItem = listItems.get(viewHolder.getAdapterPosition());
                 final TextView dialog_title_tv = myDialog.findViewById(R.id.event_name);
                 final TextView dialog_date_tv = myDialog.findViewById(R.id.event_date);
@@ -133,6 +136,20 @@ public class RecyclerAdapterMyReservations extends RecyclerView.Adapter<Recycler
                 dialog_date_tv.setText(listItem.eventDate);
                 dialog_time_tv.setText(listItem.eventTime);
                 dialog_image_img.setImageResource(R.drawable.screenshot_2);
+
+                ImageButton loc=myDialog.findViewById(R.id.location_btn_detailed);
+
+                loc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final Events listItem = listItems.get(viewHolder.getAdapterPosition());
+                        Uri gmmIntentUri = Uri.parse("geo:0,0?q="+listItem.location);
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        context.startActivity(mapIntent);
+                    }
+                });
+
                 myDialog.show();
             }
         });

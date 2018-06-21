@@ -1,12 +1,12 @@
 package com.vergjor.android.partyup;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +27,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
@@ -38,6 +40,7 @@ import java.util.concurrent.Semaphore;
 class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private List<ListEvents> listItems;
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
     private Dialog myDialog;
     private static UserSavedEvents userSavedEvents;
@@ -47,23 +50,27 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     static Semaphore lock = new Semaphore(0);
     static Semaphore lock1 = new Semaphore(0);
 
-    public RecyclerAdapter(List<ListEvents> listItems, Context context){
+    RecyclerAdapter(List<ListEvents> listItems, Context context){
+
+        Collections.sort(listItems, new Comparator<ListEvents>() {
+            @Override
+            public int compare(ListEvents e1, ListEvents e2) {
+                return e1.getDateOfEvent().compareTo(e2.getDateOfEvent());
+            }
+        });
+
         this.listItems = listItems;
-        this.context = context;
+        RecyclerAdapter.context = context;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
-        protected CardView cardInfo;
+        CardView cardInfo;
 
-        public TextView itemTitle;
-        public TextView itemDetail;
+        TextView itemTitle;
         public ImageView imageView;
-        public ImageButton btnReserve;
-        public ImageButton btnLocation;
-        public ImageButton btnLike;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             cardInfo = itemView.findViewById(R.id.card_view);
             itemTitle = itemView.findViewById(R.id.event_title);
@@ -122,7 +129,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     }
                 });
 
-                ImageButton loc=myDialog.findViewById(R.id.location_btn);
+                ImageButton loc = myDialog.findViewById(R.id.location_btn);
 
                 loc.setOnClickListener(new View.OnClickListener() {
                     @Override
