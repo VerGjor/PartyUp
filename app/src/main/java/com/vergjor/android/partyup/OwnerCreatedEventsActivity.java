@@ -5,18 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,27 +17,25 @@ public class OwnerCreatedEventsActivity extends AppCompatActivity{
 
     public List<CreatedEvents> listEvents = new ArrayList<>();
     public RecyclerView recyclerView;
-    RecyclerView recyclerViewReservations;
-    static RecyclerView.Adapter adapter, adapterReservations;
+    static RecyclerView.Adapter adapter;
     public static TextView textView;
 
     TextView createdEventTitle;
     TextView createdEventDate;
     TextView createdEventTime;
-    TextView createdEventResNo;
-    TextView createResMsg;
+
+    ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_created_events);
 
-        createResMsg = findViewById(R.id.CreatedEventsMsgFr);
+        scrollView = findViewById(R.id.scrollView);
+
         createdEventTitle = findViewById(R.id.title_created_event_fr);
         createdEventTime = findViewById(R.id.time_created_event_fr);
         createdEventDate = findViewById(R.id.date_created_event_fr);
-        createdEventResNo = findViewById(R.id.numRes_created_event_fr);
-        recyclerViewReservations = findViewById(R.id.recycler_created_events_fr);
 
         updateData();
 
@@ -90,74 +78,17 @@ public class OwnerCreatedEventsActivity extends AppCompatActivity{
                 listEvents.add(new CreatedEvents(e.eventTitle, e.eventDate, e.eventTime, e.taxNumber, e.numReservations));
             }
 
+            createdEventTitle.setText(listEvents.get(0).eventTitle);
+            createdEventTime.setText(listEvents.get(0).eventTime);
+            createdEventDate.setText(listEvents.get(0).eventDate);
+
+            adapter = new RecyclerAdapterOwnerCreatedEvents(listEvents, createdEventTitle, createdEventDate, createdEventTime , this);
+            recyclerView.setAdapter(adapter);
+
         }
 
 
-        createdEventTitle.setText(listEvents.get(0).eventTitle);
-        createdEventTime.setText(listEvents.get(0).eventTime);
-        createdEventDate.setText(listEvents.get(0).eventDate);
-        StringBuilder sb = new StringBuilder();
 
-        final List<EventReservation> listReservations = new ArrayList<>();
-
-        recyclerViewReservations.setHasFixedSize(true);
-        recyclerViewReservations.setLayoutManager(new LinearLayoutManager(this));
-
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.GET,
-                RESERVATIONS_REQUEST_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONArray events = new JSONArray(response);
-                            for(int i=0; i < events.length(); i++){
-                                JSONObject eventsObject = events.getJSONObject(i);
-                                String clientName = eventsObject.getString("Cl_Name");
-                                String eventName = eventsObject.getString("E_name");
-                                String b_tax=eventsObject.getString("B_Tax");
-                                if(listEvents.get(0).eventTitle.equals(eventName))
-                                    listReservations.add(new EventReservation(clientName, eventName, b_tax));
-
-                            }
-
-                            adapterReservations = new RecyclerAdapterEventReservations(listReservations, getApplicationContext());
-                            recyclerViewReservations.setAdapter(adapterReservations);
-                        }
-                        catch (JSONException e){
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(
-                                OwnerCreatedEventsActivity.this,
-                                error.getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-        Volley.newRequestQueue(this).add(stringRequest);
-
-
-        sb.append(listReservations.size());
-        sb.append(" / ");
-        sb.append(db.userInfoDao().getEventNumResertvations(listEvents.get(0).eventTitle));
-
-        createdEventResNo.setText(sb.toString());
-
-        if(listReservations.size() == 0){
-            createResMsg.setText("This event has no reservations");
-        }
-        else
-            createResMsg.setText("");
-
-        adapter = new RecyclerAdapterOwnerCreatedEvents(listEvents, createdEventTitle, createdEventDate, createdEventTime , createdEventResNo, recyclerViewReservations, createResMsg, this);
-        recyclerView.setAdapter(adapter);
 
     }
 

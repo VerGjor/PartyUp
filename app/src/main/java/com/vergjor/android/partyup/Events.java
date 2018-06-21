@@ -13,6 +13,10 @@ public class Events {
         this.eventDate = eventDate;
         this.eventTime = eventTime;
         this.taxNumber = taxNumber;
-        this.location=location;
+        this.location = location;
+    }
+
+    public String getLocation() {
+        return location;
     }
 }

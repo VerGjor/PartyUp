@@ -3,10 +3,8 @@ package com.vergjor.android.partyup;
 import android.app.Dialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -137,18 +135,6 @@ public class RecyclerAdapterMyReservations extends RecyclerView.Adapter<Recycler
                 dialog_time_tv.setText(listItem.eventTime);
                 dialog_image_img.setImageResource(R.drawable.screenshot_2);
 
-                ImageButton loc=myDialog.findViewById(R.id.location_btn_detailed);
-
-                loc.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        final Events listItem = listItems.get(viewHolder.getAdapterPosition());
-                        Uri gmmIntentUri = Uri.parse("geo:0,0?q="+listItem.location);
-                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                        mapIntent.setPackage("com.google.android.apps.maps");
-                        context.startActivity(mapIntent);
-                    }
-                });
 
                 myDialog.show();
             }

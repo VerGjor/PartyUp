@@ -142,6 +142,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                 });
 
                 ImageButton dialog_image_like_btn = myDialog.findViewById(R.id.like_btn);
+
                 dialog_image_like_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

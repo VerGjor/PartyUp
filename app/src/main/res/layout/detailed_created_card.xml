@@ -94,29 +94,6 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
-
-
-                <ImageButton
-                    android:id="@+id/location_btn_detailed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="@drawable/shape_card"
-                    android:src="@drawable/location_btn" />
-
-
-
-
-            </LinearLayout>
-
         </LinearLayout>
 
         <com.vergjor.android.partyup.RoundedImageView
