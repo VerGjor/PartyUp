@@ -4,8 +4,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,11 +20,7 @@ public class AddEventRequest extends StringRequest {
 
         super(Request.Method.POST, REGISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();
-        try {
-            params.put("picture", URLEncoder.encode(url,"UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        params.put("picture", url);
         params.put("e_name", e_name);
         params.put("b_tax", tax);
         params.put("time", time);

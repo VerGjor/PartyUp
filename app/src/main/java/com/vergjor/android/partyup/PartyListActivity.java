@@ -52,7 +52,7 @@ public class PartyListActivity extends AppCompatActivity {
                             for(int i=0; i < events.length(); i++){
                                 JSONObject eventsObject = events.getJSONObject(i);
                                 String eventName = eventsObject.getString("E_name");
-                               // String eventPoster = eventsObject.getString("Picture");
+                                // String eventPoster = eventsObject.getString("Picture");
                                 int eventNumberOfReservations = eventsObject.getInt("Reservations");
                                 String eventDate = eventsObject.getString("Time");
                                 String b_tax=eventsObject.getString("B_Tax");

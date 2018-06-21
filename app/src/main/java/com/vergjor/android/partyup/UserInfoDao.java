@@ -49,6 +49,9 @@ public interface UserInfoDao {
     @Query("SELECT addressOwner FROM user")
     String getAddressOfCaffee();
 
+    @Query("SELECT numReservations FROM OwnerCreatedEvents WHERE eventTitle LIKE :etitle")
+    String getEventNumResertvations(String etitle);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUser(User user);
 

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Created events"
         android:textSize="30sp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:gravity="center_vertical"
         android:textColor="#B9B7A7"
         android:layout_alignParentTop="true"/>
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         />
 
@@ -40,6 +40,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-    
+
+    <fragment
+        class ="com.vergjor.android.partyup.CreatedEventDetailsFragment"
+        android:id="@+id/details_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </fragment>
+
 </LinearLayout>
 
